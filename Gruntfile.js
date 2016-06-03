@@ -54,6 +54,8 @@ module.exports = function(grunt) {
 					"src/engine/math/Vector4.js",
 					"src/engine/math/Matrix3.js",
 					"src/engine/math/Matrix4.js",
+					"src/engine/core/genericObj.js",
+					"src/engine/renderers/GLRenderer.js"
 				],
 				dest: "dist/js/readable/quack.js"
 			}
