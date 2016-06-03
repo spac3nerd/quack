@@ -5,12 +5,9 @@ quack.math.Vector3 = quack.math.Vector3 || function(x, y ,z) {
 	this.z = z || 0;
 	
 	this.set = function(x, y ,z) {
-		if (arguments.length !== 3) {
-			throw new Error("Vector3 requires 3 arguments, " + arguments.length + " were provided");
-		}
-		this.x = x;
-		this.y = y;
-		this.z = z;
+		this.x = x || 0;
+		this.y = y || 0;
+		this.z = z || 0;
 		
 		return this;
 	};
@@ -58,13 +55,13 @@ quack.math.Vector3 = quack.math.Vector3 || function(x, y ,z) {
 		return this.x * v.x + this.y * v.y + this.z * v.z;
 	};
 	
-	this.normalize = function() {
-		this.multScalar(1 / this.length());
-	};
-	
 	//return the length of the vector
 	this.length = function() {
 		return Math.sqrt((this.x * this.x) + (this.y * this.y) + (this.z * this.z));
+	};
+	
+	this.normalize = function() {
+		this.multScalar(1 / this.length());
 	};
 	
 };
