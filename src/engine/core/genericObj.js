@@ -6,10 +6,16 @@ quack.core.genericObj = function(id) {
 	this.parent = undefined;
 	this.children = [];
 	
-	this.position = new quack.math.Vector3();
-	
+	this.position = new quack.math.Vector3(0, 0, 0);
+	this.scale = new quack.math.Vector3(1, 1, 1);
 	
 	this.setPosition = function(x, y ,z) {
 		this.position.set(x, y ,z);
+	};
+	
+	this.append = function(obj) {
+		if (obj instanceof quack.core.genericObj) {
+			this.children.push(obj);
+		}
 	};
 };
