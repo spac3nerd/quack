@@ -5,7 +5,7 @@ options {
 	height:
 }
 */
-quack.core.genericObj = function(canvas, options) {
+quack.renderers.GLRenderer = function(canvas, options) {
 	//constructor
 	this.canvas = canvas;
 	this.id = options.id || "default";
