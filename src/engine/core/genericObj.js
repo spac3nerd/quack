@@ -2,6 +2,14 @@
 quack.core.genericObj = function(id) {
 	//constructor
 	this.id = id;
+	this.type = "generic";
+	this.parent = undefined;
+	this.children = [];
+	
+	this.position = new quack.math.Vector3();
 	
 	
+	this.setPosition = function(x, y ,z) {
+		this.position.set(x, y ,z);
+	};
 };

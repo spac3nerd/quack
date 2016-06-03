@@ -21,6 +21,6 @@ quack.renderers.GLRenderer = function(canvas, options) {
 		depth: options.depth || false
 	};
 	
-	this.gl = canvas.getContext("webgl", contextOptions);
+	this.gl = canvas.getContext("webgl", this.contextOptions);
 	
 }; 
