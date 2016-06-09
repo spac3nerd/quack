@@ -72,7 +72,11 @@ That's all! You now have the unminified sources in the dist folder!
 As previously stated, the default grunt task runs JSHint, and a concatenation of JS and CSS.
 However, you may chose to run other tasks, or individual tasks.
 
+#### Experimental
+In order to build using the custom 3D library instead of THREE.js:
 
+	$ grunt exp
+	
 #### Debug build
 The debug build is the default choice when the user simply runs "grunt". The difference between production and debug besides
 minification is that debug allows debugger statements in the code while production does not.
