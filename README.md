@@ -21,6 +21,10 @@ Afterwards, simply run:
 	
 This will install the needed plugins. 
 
+Next, you need to download the needed libraries
+
+	$ grunt get
+
 Type:
 
 	$ grunt
@@ -49,6 +53,10 @@ Simply run:
 Then you might need to run:
 
 	$ npm install grunt
+
+Next, you need to download the needed libraries
+
+	$ grunt get
 
 Finally, type:
 

@@ -49,6 +49,19 @@ module.exports = function(grunt) {
 			},
 			dist: {
 				src: [
+					"lib/**/*.js"
+				],
+				dest: "dist/js/readable/quack.js"
+			}
+		},
+		//Experimental build concat
+		
+		concatExp: {
+			options: {
+				separator: "\n;"
+			},
+			dist: {
+				src: [
 					"src/engine/quack.js",
 					"src/engine/math/Vector3.js",
 					"src/engine/math/Vector4.js",
@@ -61,11 +74,7 @@ module.exports = function(grunt) {
 				],
 				dest: "dist/js/readable/quack.js"
 			}
-		},
-		//Experimental build concat
-		/*
-		concatExp: {
-		}, */
+		}, 
 		concatcss: {
 			options: {
 				separator: "\n;"
@@ -77,6 +86,13 @@ module.exports = function(grunt) {
 				dest: "dist/css/readable/style.css"
 			}
 		},
+		getFile: {
+			dist: {
+				resource: "https://cdnjs.cloudflare.com/ajax/libs/three.js/r77/three.js",
+				dest: "lib",
+				name: "three.js"
+			}
+		}
 	});
 	
 	//Load taks from plugins
@@ -88,16 +104,41 @@ module.exports = function(grunt) {
 	
 	//Load the default task
 	grunt.registerTask("default", ["debug"]);
-	
+	grunt.registerTask("get", ["getFile"]);
 	grunt.registerTask("build", ["concat", "concatcss", "minjshint", "uglify"]); //"debugger" statements are not allowed
 	grunt.registerTask("debug", ["concat", "concatcss", "jshint"]); //"debugger" statements are allowed in the development build
 	
-	//TODO
-	/*
-	grunt.registerTask("experimental", function() {
-
+	grunt.registerTask("exp", ["concatExp", "concatcss", "jshint"]); // The experimental build
+	
+	//A simple custom file downloader
+	grunt.registerTask("getFile", function() {
+		
+		var done = this.async();
+		var dist = grunt.config("getFile").dist;
+		var dir = dist.dest;
+		
+		var http = require("https");
+		var fs = require("fs");
+		var writeStream = fs.createWriteStream(dist.dest + "/" + dist.name); // dest/name
+		var request = http.get(dist.resource, function(e) {
+			e.pipe(writeStream);
+			e.on("end", function(a) {
+				console.log(dist.name + "-----" + " complete");
+			});
+		});
 	});
-	*/
+	
+	grunt.registerTask("concatExp", function() {
+		var task = grunt.config("concatExp");
+		var src = task.dist.src;
+		var dist = task.dist;
+		var options = task.options;
+		grunt.config.set("concat", {
+			options: options,
+			dist: dist
+		})
+		grunt.task.run("concat");
+	});
 	
 	//This task just changes the arguments for the concat task and then runs it.
 	grunt.registerTask("concatcss", function() {
