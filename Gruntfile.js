@@ -49,7 +49,8 @@ module.exports = function(grunt) {
 			},
 			dist: {
 				src: [
-					"lib/**/*.js"
+					"lib/**/*.js",
+					"src/engine/quack.js"
 				],
 				dest: "dist/js/readable/quack.js"
 			}
@@ -100,7 +101,6 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks("grunt-contrib-clean");
 	grunt.loadNpmTasks("grunt-contrib-jshint");
 	grunt.loadNpmTasks("grunt-contrib-concat");
-	grunt.loadNpmTasks("grunt-contrib-jst");
 	
 	//Load the default task
 	grunt.registerTask("default", ["debug"]);

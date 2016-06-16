@@ -8,7 +8,6 @@
 		"grunt-contrib-nodeunit": "~1.0.0",
 		"grunt-contrib-uglify": "~1.0.1",
 		"grunt-contrib-clean": "~1.0.0",
-		"grunt-contrib-concat": "~1.0.1",
-		"grunt-contrib-jst": "~1.0.0"
+		"grunt-contrib-concat": "~1.0.1"
 	}
 }
