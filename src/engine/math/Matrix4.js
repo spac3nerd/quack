@@ -1,5 +1,5 @@
 quack.math.Matrix4 = quack.math.Matrix4 || function() {
-	//set the matrix to the 3x3 identity matrix
+	//set the matrix to the 4x4 identity matrix
 	this.setIdentity = function() {
 		this.elements = [
 			1, 0, 0, 0,
@@ -21,6 +21,13 @@ quack.math.Matrix4 = quack.math.Matrix4 || function() {
 		this.elements[2] = e20 || 0, this.elements[6] = e21 || 0, this.elements[10] = e22 || 1, this.elements[14] = e23 || 0,
 		this.elements[3] = e30 || 0, this.elements[7] = e31 || 0, this.elements[11] = e32 || 0, this.elements[15] = e33 || 0;
 		
+		return this;
+	};
+	
+	this.multScalar = function(a) {
+		for (var k = 0; k < 16; k++) {
+			this.elements[k] *= a;
+		}
 		return this;
 	};
 };

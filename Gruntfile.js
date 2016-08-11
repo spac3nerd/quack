@@ -42,8 +42,8 @@ module.exports = function(grunt) {
 				}
 			}
 		},
-		//Defaut concat job
-		concat: {
+		//Experimental concat
+		concatExp: {
 			options: {
 				separator: "\n;"
 			},
@@ -55,9 +55,9 @@ module.exports = function(grunt) {
 				dest: "dist/js/readable/quack.js"
 			}
 		},
-		//Experimental build concat
+		//Default concat job
 		
-		concatExp: {
+		concat: {
 			options: {
 				separator: "\n;"
 			},

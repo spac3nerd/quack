@@ -1,4 +1,4 @@
-quack.core.genericObj = function(left, right, top, bottom, far, near) {
+quack.core.orthoCamera = function(left, right, top, bottom, far, near) {
 	quack.core.genericObj.call(this);
 	
 	this.left = left;
