@@ -7,6 +7,7 @@ quack.prototype= {
 		quack.renderers = {};
 		quack.editor = {};
 		quack.ui = {};
+		quack.shaders = {};
 	}(),
 	version: "0.0.1"
 };

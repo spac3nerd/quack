@@ -76,6 +76,25 @@ module.exports = function(grunt) {
 				dest: "dist/css/readable/style.css"
 			}
 		},
+		glslToJS: {
+			options: {
+				lineSparator: "\n",
+				parentObj: "quack.shaders" //a property for each file will be added
+			},
+			dist: {
+				source: [
+					"src/engine/shaders/flatVertex.glsl",
+					"src/engine/shaders/flatFrag.glsl"
+				],
+				//these property names match up to the files listed above
+				objNames: [
+					"flatVertex",
+					"flatFrag"
+				],
+				dest: "src/engine/shaders/shaderCollection.js"
+			}
+			
+		}
 		/*
 		getFile: {
 			dist: {
@@ -98,10 +117,17 @@ module.exports = function(grunt) {
 	grunt.registerTask("build", ["concat", "concatcss", "minjshint", "uglify"]); //"debugger" statements are not allowed
 	grunt.registerTask("debug", ["concat", "concatcss", "jshint"]); //"debugger" statements are allowed in the development build
 	
+	grunt.registerTask("glsl", ["glslToJS"]);
+	
+	
+	
+	//****************************
+	//Custom task definitions
+	//****************************
+	
 	
 	//A simple custom file downloader
 	grunt.registerTask("getFile", function() {
-		
 		var done = this.async();
 		var dist = grunt.config("getFile").dist;
 		var dir = dist.dest;
@@ -116,6 +142,34 @@ module.exports = function(grunt) {
 			});
 		});
 	});
+	
+	//A custom task to make GLSL usable
+	grunt.registerTask("glslToJS", function() {
+		var done = this.async();
+		var dist = grunt.config("glslToJS").dist;
+		var options = grunt.config("glslToJS").options;
+		var readline = require("linebyline");
+		var r = [];
+		var containerObj = {};
+		
+		for (var k = 0; k < dist.source.length; k++) {
+			r.push(readline(dist.source[k]));
+			r[k].index = k; //add this prop so that the correct index can be retrieved on the end event
+			r[k].currentString = "";
+			r[k].on("line", function(line) {
+				r[this.index].currentString += line + options.lineSparator;
+				
+			});
+			r[k].on("end", function() {
+				containerObj[dist.objNames[this.index]] = this.currentString;
+				if (this.index === k - 1) {
+					console.log(containerObj);
+				}
+			});
+		}
+		
+	});
+	
 	
 	grunt.registerTask("concatExp", function() {
 		var task = grunt.config("concatExp");
