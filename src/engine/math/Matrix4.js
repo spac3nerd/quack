@@ -24,6 +24,12 @@ quack.math.matrix4 = function() {
 		return this;
 	};
 	
+	//Don't feel like writing this one yet
+	this.determinant = function() {
+		
+		
+	};
+	
 	this.multScalar = function(a) {
 		for (var k = 0; k < 16; k++) {
 			this.elements[k] *= a;

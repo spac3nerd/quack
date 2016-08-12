@@ -15,15 +15,11 @@ Next, you need to install grunt:
 
 	$ npm install -g grunt-cli
 	
-Afterwards, simply run:
+Afterwards, switch to the project root and simply run:
 
 	$ npm install
 	
 This will install the needed plugins. 
-
-Next, you need to download the needed libraries
-
-	$ grunt get
 
 Type:
 
@@ -44,7 +40,7 @@ Next, you need to install grunt:
 
 	$ npm install -g grunt-cli
 
-Change directory to development, which is the root of the project.
+Change directory to project root, which is the root of the project.
 
 Simply run:
 
@@ -53,10 +49,6 @@ Simply run:
 Then you might need to run:
 
 	$ npm install grunt
-
-Next, you need to download the needed libraries
-
-	$ grunt get
 
 Finally, type:
 
@@ -99,5 +91,3 @@ You may chose to only run minification, but it does depend on the debug build
 
 	$ grunt uglify
 	
-
-Simply use your favorite web browser to view doc/index.html
