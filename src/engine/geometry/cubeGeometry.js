@@ -21,7 +21,7 @@ quack.cubeGeometry = function(position, width, height, depth) {
 		return n;
 	};
 	
-	this._construct
+	//this._construct
 	
 	this.init = function() {
 		this.vertices = new Float32Array(this._numberOfVertices());

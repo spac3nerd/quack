@@ -11,7 +11,7 @@ quack.renderers.GLRenderer = function(canvas, options) {
 	this.id = options.id || "default";
 	this.width = options.width || 0;
 	this.height = options.height || 0;
-	this.clearColor = options.clearColor || new quack.math.Vector4(0.0, 0.0, 0.0, 0.0);
+	this.clearColor = options.clearColor || new quack.math.vector4(0.0, 0.0, 0.0, 0.0);
 	
 	
 	//init the context
@@ -23,7 +23,7 @@ quack.renderers.GLRenderer = function(canvas, options) {
 	};
 	
 	this.gl = canvas.getContext("webgl", this.contextOptions);
-	gl.clearColor(this.clearColor.x, this.clearColor.y, this.clearColor.z, this.clearAlpha);
+	gl.clearColor(this.clearColor.x, this.clearColor.y, this.clearColor.z, this.clearColor.w);
 	
 	this.setClearColor = function(color) {
 		gl.clearColor(color.x, color.y, color.z, color.w);
