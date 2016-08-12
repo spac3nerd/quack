@@ -1,4 +1,4 @@
-quack.math.Vector3 = quack.math.Vector3 || function(x, y ,z) {
+quack.math.vector3 = function(x, y ,z) {
 	//constructor
 	this.x = x || 0;
 	this.y = y || 0;
@@ -34,6 +34,8 @@ quack.math.Vector3 = quack.math.Vector3 || function(x, y ,z) {
 		this.x = this.x + v.x;
 		this.y = this.y + v.y;
 		this.z = this.z + v.z;
+		
+		return this;
 	};
 	
 	//Add scalar a to vector
@@ -41,6 +43,8 @@ quack.math.Vector3 = quack.math.Vector3 || function(x, y ,z) {
 		this.x = this.x + a;
 		this.y = this.y + a;
 		this.z = this.z + a;
+		
+		return this;
 	};
 	
 	//multiply this vector with scalar a
@@ -48,6 +52,8 @@ quack.math.Vector3 = quack.math.Vector3 || function(x, y ,z) {
 		this.x = this.x * a;
 		this.y = this.y * a;
 		this.z = this.z * a;
+		
+		return this;
 	};
 	
 	//Return the scalar product between this vector and vector v

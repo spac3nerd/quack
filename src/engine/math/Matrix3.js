@@ -1,4 +1,4 @@
-quack.math.Matrix3 = quack.math.Matrix3 || function() {
+quack.math.matrix3 = function() {
 	//set the matrix to the 3x3 identity matrix
 	this.setIdentity = function() {
 		this.elements = [
@@ -26,12 +26,13 @@ quack.math.Matrix3 = quack.math.Matrix3 || function() {
 		for (var k = 0; k < 9; k++) {
 			this.elements[k] *= a;
 		}
+		
 		return this;
 	};
 	
 	this.multVector = function(v) {
 		var elem = this.elements;
-		return new quack.math.Vector3(
+		return new quack.math.vector3(
 			elem[0] * v.x + elem[3] * v.y + elem[6] * v.z, 
 			elem[1] * v.x + elem[4] * v.y + elem[7] * v.z,
 			elem[2] * v.x + elem[5] * v.y + elem[8] * v.z

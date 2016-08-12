@@ -1,4 +1,4 @@
-quack.math.Vector4 = quack.math.Vector4 || function(x, y ,z, w) {
+quack.math.vector4 = function(x, y ,z, w) {
 	this.x = x || 0;
 	this.y = y || 0;
 	this.z = z || 0;
@@ -34,6 +34,8 @@ quack.math.Vector4 = quack.math.Vector4 || function(x, y ,z, w) {
 		this.y = this.y + v.y;
 		this.z = this.z + v.z;
 		this.w = this.w + v.w;
+		
+		return this;
 	};
 	
 	this.addScalar = function(a) {
@@ -41,6 +43,8 @@ quack.math.Vector4 = quack.math.Vector4 || function(x, y ,z, w) {
 		this.y = this.y + a;
 		this.z = this.z + a;
 		this.w = this.w + a;
+		
+		return this;
 	};
 	
 	//multiply this vector with scalar a
@@ -49,6 +53,8 @@ quack.math.Vector4 = quack.math.Vector4 || function(x, y ,z, w) {
 		this.y = this.y * a;
 		this.z = this.z * a;
 		this.w = this.w * a;
+		
+		return this;
 	};
 	
 	this.dotProduct = function(v) {
