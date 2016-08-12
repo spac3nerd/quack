@@ -5,7 +5,19 @@
 	
 </head>
 <body>
-	<div id="view" style="width:500px; height:500px">
-		
+	<div id="container" style="width:500px; height:500px">
+		<canvas id="view" style="width:500px; height:500px">
+			
+		</canvas>
 	</div>
 </body>
+
+<script type="text/javascript">
+	var canvas = document.getElementById("view");
+	var renderer = new quack.renderers.GLRenderer(canvas, {
+		width: canvas.clientWidth,
+		height: canvas.clientHeight,
+		clearColor: new quack.math.vector4(0, 0, 0, 1),
+		antialias: true
+	});
+</script>

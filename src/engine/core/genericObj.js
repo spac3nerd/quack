@@ -14,8 +14,6 @@ quack.core.genericObj = function(id) {
 	};
 	
 	this.append = function(obj) {
-		if (obj instanceof quack.core.genericObj) {
-			this.children.push(obj);
-		}
+		this.children.push(obj);
 	};
 };

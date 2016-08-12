@@ -22,8 +22,11 @@ quack.renderers.GLRenderer = function(canvas, options) {
 		depth: options.depth || false
 	};
 	
+	
+	//TODO: initialization of the gl context should be moved to its own module
 	this.gl = canvas.getContext("webgl", this.contextOptions);
-	gl.clearColor(this.clearColor.x, this.clearColor.y, this.clearColor.z, this.clearColor.w);
+	this.gl.clearColor(this.clearColor.x, this.clearColor.y, this.clearColor.z, this.clearColor.w);
+	this.gl.enable(this.gl.DEPTH_TEST);
 	
 	this.setClearColor = function(color) {
 		gl.clearColor(color.x, color.y, color.z, color.w);

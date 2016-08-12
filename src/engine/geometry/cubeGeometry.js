@@ -32,8 +32,6 @@ quack.cubeGeometry = function(position, width, height, depth) {
 	
 	
 	this.update = function() {
-		this.setVerticesFromCenter();
-		
 		return this;
 	};
 }; 
