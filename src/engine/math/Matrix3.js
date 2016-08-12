@@ -22,6 +22,13 @@ quack.math.matrix3 = function() {
 		return this;
 	};
 	
+	this.determinant = function() {
+		var e = this.elements; //just to make this not look like a mess
+		return (e[0] * e[4] * e[8]) + (e[1] * e[5] * e[6]) + (e[2] * e[3] * e[7]) -
+			(e[6] * e[4] * e[2]) -(e[7] * e[5] * e[0]) - (e[8] * e[3] * e[1]);
+		
+	};
+	
 	this.multScalar = function(a) {
 		for (var k = 0; k < 9; k++) {
 			this.elements[k] *= a;
