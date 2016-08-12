@@ -1,5 +1,5 @@
 var quack = {};
-quack.prototype= {
+quack.prototype = {
 	init: function() {
 		//setup the needed namespaces
 		quack.math = {};

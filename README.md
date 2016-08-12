@@ -21,7 +21,11 @@ Afterwards, switch to the project root and simply run:
 	
 This will install the needed plugins. 
 
-Type:
+At first run, and when GLSL files are modified, you need to run:
+	
+	$ grunt glsl
+
+Finally, to build it all:
 
 	$ grunt
 	
@@ -49,6 +53,10 @@ Simply run:
 Then you might need to run:
 
 	$ npm install grunt
+
+At first run, and when GLSL files are modified, you need to run:
+	
+	$ grunt glsl
 
 Finally, type:
 
@@ -81,6 +89,12 @@ It depends on /dist/js/readable/grapher.js existing (created by debug build), an
 
 	$ grunt build
 	
+	
+#### Adding shaders 
+When you modify any shader file, you must run the following command followed by the debug build:
+
+	$ grunt glsl
+
 #### JSHint
 If you simply wish to run JSHint on the source files:
 

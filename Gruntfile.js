@@ -51,6 +51,7 @@ module.exports = function(grunt) {
 			dist: {
 				src: [
 					"src/engine/quack.js",
+					"src/engine/shaders/shaderCollection.js",
 					"src/engine/math/Vector3.js",
 					"src/engine/math/Vector4.js",
 					"src/engine/math/Matrix3.js",
@@ -152,6 +153,8 @@ module.exports = function(grunt) {
 		var r = [];
 		var containerObj = {};
 		
+		var fs = require("fs");
+		
 		for (var k = 0; k < dist.source.length; k++) {
 			r.push(readline(dist.source[k]));
 			r[k].index = k; //add this prop so that the correct index can be retrieved on the end event
@@ -162,12 +165,13 @@ module.exports = function(grunt) {
 			});
 			r[k].on("end", function() {
 				containerObj[dist.objNames[this.index]] = this.currentString;
+				//when the final file is fully read
 				if (this.index === k - 1) {
-					console.log(containerObj);
+					//We must convert our object to JSON
+					fs.writeFile(dist.dest, options.parentObj + "=" + JSON.stringify(containerObj) + ";");
 				}
 			});
 		}
-		
 	});
 	
 	
