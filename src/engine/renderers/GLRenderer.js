@@ -22,13 +22,20 @@ quack.renderers.GLRenderer = function(canvas, options) {
 		depth: options.depth || false
 	};
 	
-	
+	//debugger;
 	//TODO: initialization of the gl context should be moved to its own module
 	this.gl = canvas.getContext("webgl", this.contextOptions);
 	this.gl.clearColor(this.clearColor.x, this.clearColor.y, this.clearColor.z, this.clearColor.w);
+	this.gl.clear(this.gl.COLOR_BUFFER_BIT);
 	this.gl.enable(this.gl.DEPTH_TEST);
 	
 	this.setClearColor = function(color) {
 		gl.clearColor(color.x, color.y, color.z, color.w);
+	};
+	
+	this.render = function(scene, camera) {
+		if ( !(scene instanceof quack.core.scene) || !(camera instanceof quack.camera.orthoCamera)) {
+			throw new Error("Invalid render arguments");
+		}
 	};
 }; 

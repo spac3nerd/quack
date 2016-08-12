@@ -4,6 +4,7 @@ quack.prototype = {
 		//setup the needed namespaces
 		quack.math = {};
 		quack.core = {};
+		quack.camera = {};
 		quack.renderers = {};
 		quack.editor = {};
 		quack.ui = {};

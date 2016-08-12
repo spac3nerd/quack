@@ -6,14 +6,25 @@ quack.core.genericObj = function(id) {
 	this.parent = undefined;
 	this.children = [];
 	
-	this.position = new quack.math.Vector3(0, 0, 0);
-	this.scale = new quack.math.Vector3(1, 1, 1);
+	this.position = new quack.math.vector3(0, 0, 0);
+	this.up = new quack.math.vector3(0, 0, 1);
+	this.scale = new quack.math.vector3(1, 1, 1);
 	
 	this.setPosition = function(x, y ,z) {
 		this.position.set(x, y ,z);
+		
+		return this;
+	};
+	
+	this.setUp = function(x, y, z) {
+		this.up.set(x, y, z);
+		
+		return this;
 	};
 	
 	this.append = function(obj) {
 		this.children.push(obj);
+		
+		return this;
 	};
 };

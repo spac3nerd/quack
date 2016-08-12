@@ -7,7 +7,7 @@ quack.geometry = function() {
 	this.scale = new quack.math.vector3(1, 1, 1); //span of geometry in x/y/z directions
 	
 	this.isSolidColor = true; //by default, all vertices have the same color. Per vertex color may be specified later
-	this.solidColor = new quack.vector3(1, 0, 0); //default solid color
+	this.solidColor = new quack.math.vector3(1, 0, 0); //default solid color
 	
 	//color can be a vector3, or a simple object with x/y/z properties
 	this.setSolidColor = function(color) {

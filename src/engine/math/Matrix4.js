@@ -24,6 +24,7 @@ quack.math.matrix4 = function() {
 		return this;
 	};
 	
+	
 	//Don't feel like writing this one yet
 	this.determinant = function() {
 		
@@ -37,8 +38,14 @@ quack.math.matrix4 = function() {
 		return this;
 	};
 	
+	
+	this.setLookAt = function(pos, lookAt, up) {
+		
+	};
+	
+	
 	//set this matrix for rotation about the x axis
-	this.rotateX = function(angle) {
+	this.setRotateX = function(angle) {
 		var a = Math.cos(angle), b = Math.sin(angle);
 		
 		this.set(
@@ -52,7 +59,7 @@ quack.math.matrix4 = function() {
 	};
 	
 	//set this matrix for rotation about the y axis
-	this.rotateY = function(angle) {
+	this.setRotateY = function(angle) {
 		var a = Math.cos(angle), b = Math.sin(angle);
 		
 		this.set(
@@ -66,7 +73,7 @@ quack.math.matrix4 = function() {
 	};
 	
 	//set this matrix for rotation about the z axis
-	this.rotateZ = function(angle) {
+	this.setRotateZ = function(angle) {
 		var a = Math.cos(angle), b = Math.sin(angle);
 		
 		this.set(
@@ -80,7 +87,7 @@ quack.math.matrix4 = function() {
 	};
 	
 	//set this matrix to a translation transformation
-	this.translate = function(x, y, z) {
+	this.setTranslate = function(x, y, z) {
 		this.set(
 			1, 0, 0, x,
 			0, 1, 0, y,
