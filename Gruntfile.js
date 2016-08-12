@@ -42,19 +42,6 @@ module.exports = function(grunt) {
 				}
 			}
 		},
-		//Experimental concat
-		concatExp: {
-			options: {
-				separator: "\n;"
-			},
-			dist: {
-				src: [
-					"lib/**/*.js",
-					"src/engine/quack.js"
-				],
-				dest: "dist/js/readable/quack.js"
-			}
-		},
 		//Default concat job
 		
 		concat: {
@@ -89,13 +76,14 @@ module.exports = function(grunt) {
 				dest: "dist/css/readable/style.css"
 			}
 		},
+		/*
 		getFile: {
 			dist: {
-				resource: "https://cdnjs.cloudflare.com/ajax/libs/three.js/r77/three.js",
+				resource: "",
 				dest: "lib",
-				name: "three.js"
+				name: ""
 			}
-		}
+		} */
 	});
 	
 	//Load taks from plugins
@@ -106,11 +94,10 @@ module.exports = function(grunt) {
 	
 	//Load the default task
 	grunt.registerTask("default", ["debug"]);
-	grunt.registerTask("get", ["getFile"]);
+	//grunt.registerTask("get", ["getFile"]);
 	grunt.registerTask("build", ["concat", "concatcss", "minjshint", "uglify"]); //"debugger" statements are not allowed
 	grunt.registerTask("debug", ["concat", "concatcss", "jshint"]); //"debugger" statements are allowed in the development build
 	
-	grunt.registerTask("exp", ["concatExp", "concatcss", "jshint"]); // The experimental build
 	
 	//A simple custom file downloader
 	grunt.registerTask("getFile", function() {
