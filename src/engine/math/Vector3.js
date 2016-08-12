@@ -23,6 +23,7 @@ quack.math.vector3 = function(x, y ,z) {
 		
 		return this;
 	};
+	
 	this.setZ = function(z) {
 		this.z = z;
 		
@@ -64,7 +65,6 @@ quack.math.vector3 = function(x, y ,z) {
 		return this;
 	};
 	
-	
 	//Add scalar a to vector
 	this.addScalar = function(a) {
 		this.x = this.x + a;
@@ -78,6 +78,38 @@ quack.math.vector3 = function(x, y ,z) {
 		this.x = this.x - a;
 		this.y = this.y - a;
 		this.z = this.z - a;
+		
+		return this;
+	};
+	
+	this.multiply = function(a) {
+		this.x = this.x * a.x;
+		this.y = this.y * a.y;
+		this.z = this.z * a.z;
+		
+		return this;
+	};
+	
+	this.multiplyVectors = function(a, b) {
+		this.x = a.x * b.x;
+		this.y = a.y * b.y;
+		this.z = a.z * b.z;
+		
+		return this;
+	};
+	
+	this.divide = function(a) {
+		this.x = this.x / a.x;
+		this.y = this.y / a.y;
+		this.z = this.z / a.z;
+		
+		return this;
+	};
+	
+	this.divideVectors = function(a, b) {
+		this.x = a.x / b.x;
+		this.y = a.x / b.y;
+		this.z = a.z / b.x;
 		
 		return this;
 	};

@@ -8,6 +8,8 @@ quack.camera.orthoCamera = function(left, right, top, bottom, far, near) {
 	this.far = far;
 	this.near = near;
 	
+	this.lookAt = new quack.math.vector3(1, 0, 0);
+	
 	//initialize the projection matrix
 	this.projectionMatrix = new quack.math.matrix4();
 	this.projectionMatrix.set(
@@ -19,6 +21,6 @@ quack.camera.orthoCamera = function(left, right, top, bottom, far, near) {
 	
 	//initialize the view matrix
 	this.viewMatrix = new quack.math.matrix4();
-	this.viewMatrix.setLookAt(this.position, new quack.math.vector3(0, 0, 0), this.up);
+	this.viewMatrix.setLookAt(this.position, this.lookAt, this.up);
 	
 };

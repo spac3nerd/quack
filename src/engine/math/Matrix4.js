@@ -40,7 +40,9 @@ quack.math.matrix4 = function() {
 	
 	
 	this.setLookAt = function(pos, lookAt, up) {
-		
+		var t = new quack.math.vector3().subVectors(lookAt, pos);
+		var t1 = t.nomal();
+		console.log(t);
 	};
 	
 	

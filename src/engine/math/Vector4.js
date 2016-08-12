@@ -85,6 +85,42 @@ quack.math.vector4 = function(x, y ,z, w) {
 		return this;
 	};
 	
+	this.multiply = function(a) {
+		this.x = this.x * a.x;
+		this.y = this.y * a.y;
+		this.z = this.z * a.z;
+		this.w = this.w * a.w;
+		
+		return this;
+	};
+	
+	this.multiplyVectors = function(a, b) {
+		this.x = a.x * b.x;
+		this.y = a.y * b.y;
+		this.z = a.z * b.z;
+		this.w = a.w * b.w;
+		
+		return this;
+	};
+	
+	this.divide = function(a) {
+		this.x = this.x / a.x;
+		this.y = this.y / a.y;
+		this.z = this.z / a.z;
+		this.w = this.w / a.w;
+		
+		return this;
+	};
+	
+	this.divideVectors = function(a, b) {
+		this.x = a.x / b.x;
+		this.y = a.x / b.y;
+		this.z = a.z / b.x;
+		this.w = a.z / b.w;
+		
+		return this;
+	};
+	
 	//multiply this vector with scalar a
 	this.multScalar = function(a) {
 		this.x = this.x * a;
