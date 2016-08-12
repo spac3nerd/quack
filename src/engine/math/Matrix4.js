@@ -1,4 +1,4 @@
-quack.math.Matrix4 = quack.math.Matrix4 || function() {
+quack.math.matrix4 = function() {
 	//set the matrix to the 4x4 identity matrix
 	this.setIdentity = function() {
 		this.elements = [
@@ -28,6 +28,60 @@ quack.math.Matrix4 = quack.math.Matrix4 || function() {
 		for (var k = 0; k < 16; k++) {
 			this.elements[k] *= a;
 		}
+		return this;
+	};
+	
+	//set this matrix for rotation about the x axis
+	this.rotateX = function(angle) {
+		var a = Math.cos(angle), b = Math.sin(angle);
+		
+		this.set(
+			1, 0, 0, 0,
+			0, a, -b, 0,
+			0, b, a, 0,
+			0, 0, 0, 1
+		);
+		
+		return this;
+	};
+	
+	//set this matrix for rotation about the y axis
+	this.rotateY = function(angle) {
+		var a = Math.cos(angle), b = Math.sin(angle);
+		
+		this.set(
+			a, 0, b, 0,
+			0, 1, 0, 0,
+			-b, 0, a, 0,
+			0, 0, 0, 1
+		);
+		
+		return this;
+	};
+	
+	//set this matrix for rotation about the z axis
+	this.rotateZ = function(angle) {
+		var a = Math.cos(angle), b = Math.sin(angle);
+		
+		this.set(
+			a, -b, 0, 0,
+			-b, a, 0, 0,
+			0, 0, 1, 0,
+			0, 0, 0, 1
+		);
+		
+		return this;
+	};
+	
+	//set this matrix to a translation transformation
+	this.translate = function(x, y, z) {
+		this.set(
+			1, 0, 0, x,
+			0, 1, 0, y,
+			0, 0, 1, z,
+			0, 0, 0, 1
+		);
+		
 		return this;
 	};
 };
