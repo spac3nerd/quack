@@ -38,11 +38,32 @@ quack.math.matrix4 = function() {
 		return this;
 	};
 	
+	//Set this matrix to the result of ab
+	this.multiplyMatrices = function(a, b) {
+		
+	};
+	
 	
 	this.setLookAt = function(pos, lookAt, up) {
-		var t = new quack.math.vector3().subVectors(lookAt, pos);
-		var t1 = t.nomal();
-		console.log(t);
+		var t = new quack.math.vector3().subVectors(lookAt, pos).normal();
+		var upNorm = up.normal();
+		var a = new quack.math.vector3().crossVectors(t, upNorm);
+		var b = new quack.math.vector3().crossVectors(a, t);
+		var M = new quack.math.matrix4().set(
+			a.x, a.y, a.z, 0,
+			b.x, b.y, b.z, 0,
+			-t.x, -t.y, -t.z, 0,
+			0, 0, 0, 1
+		);
+		var T = new quack.math.matrix4().set(
+			1, 0, 0, -pos.x,
+			0, 1, 0, -pos.y,
+			0, 0, 1, -pos.z,
+			0, 0, 0, 1
+		);
+		this.multiplyMatrices(M, T);
+		
+		return this;
 	};
 	
 	
