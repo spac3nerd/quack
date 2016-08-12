@@ -30,19 +30,54 @@ quack.math.vector3 = function(x, y ,z) {
 	};
 	
 	//Add this vector with vector v
-	this.addVector = function(v) {
-		this.x = this.x + v.x;
-		this.y = this.y + v.y;
-		this.z = this.z + v.z;
+	this.add = function(a) {
+		this.x = this.x + a.x;
+		this.y = this.y + a.y;
+		this.z = this.z + a.z;
 		
 		return this;
 	};
+	
+	//add vectors a and b and set the result equal to this vector
+	this.addVectors = function(a, b) {
+		this.x = a.x + b.x;
+		this.y = a.y + b.y;
+		this.z = a.z + b.z;
+		
+		return this;
+	};
+	
+	//sub vector a from this vector
+	this.sub = function(a) {
+		this.x = this.x - a.x;
+		this.y = this.y - a.y;
+		this.z = this.z - a.z;
+		
+		return this;
+	};
+	
+	this.subVectors = function(a, b) {
+		this.x = a.x - b.x;
+		this.y = a.y - b.y;
+		this.z = a.z - b.z;
+		
+		return this;
+	};
+	
 	
 	//Add scalar a to vector
 	this.addScalar = function(a) {
 		this.x = this.x + a;
 		this.y = this.y + a;
 		this.z = this.z + a;
+		
+		return this;
+	};
+	
+	this.subScalar = function(a) {
+		this.x = this.x - a;
+		this.y = this.y - a;
+		this.z = this.z - a;
 		
 		return this;
 	};
@@ -66,8 +101,20 @@ quack.math.vector3 = function(x, y ,z) {
 		return Math.sqrt((this.x * this.x) + (this.y * this.y) + (this.z * this.z));
 	};
 	
-	this.normalize = function() {
+	//returns the normal vector
+	this.normal = function() {
+		//create new vector with same values as this one
+		var t = new quack.math.vector3(this.x, this.y, this.z);
+		t.setNormal();
+		
+		return t;
+	};
+	
+	//sets this vector to its normal
+	this.setNormal = function() {
 		this.multScalar(1 / this.length());
+		
+		return this;
 	};
 	
 };
