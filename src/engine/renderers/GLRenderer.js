@@ -56,7 +56,7 @@ quack.renderers.GLRenderer = function(canvas, options) {
 		}
 		this.gl.vertexAttribPointer(a_attr, n, type, false, 0, 0);
 		this.gl.enableVertexAttribArray(a_attr);
-		this.gl.bindBuffer(this.gl.ARRAY_BUFFER, null);
+		//this.gl.bindBuffer(this.gl.ARRAY_BUFFER, null);
 	};
 	
 	this.render = function(scene, camera) {
