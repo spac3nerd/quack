@@ -39,6 +39,26 @@ quack.renderers.GLRenderer = function(canvas, options) {
 		return shader;
 	};
 	
+	this._setElementArrayBuffer = function(data) {
+		var buffer = this.gl.createBuffer();
+		this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, buffer);
+		this.gl.bufferData(this.gl.ELEMENT_ARRAY_BUFFER, data, this.gl.STATIC_DRAW);
+	};
+	
+	this._setArrayBuffer = function(data, n, type, attr) {
+		var buffer = this.gl.createBuffer();
+		this.gl.bindBuffer(this.gl.ARRAY_BUFFER, buffer);
+		this.gl.bufferData(this.gl.ARRAY_BUFFER, data, this.gl.STATIC_DRAW);
+		
+		var a_attr = this.gl.getAttribLocation(this.gl.program, attr);
+		if (a_attr < 0) {
+			console.warn("failed to get location of: " + attr);
+		}
+		this.gl.vertexAttribPointer(a_attr, n, type, false, 0, 0);
+		this.gl.enableVertexAttribArray(a_attr);
+		this.gl.bindBuffer(this.gl.ARRAY_BUFFER, null);
+	};
+	
 	this.render = function(scene, camera) {
 		if ( !(scene instanceof quack.core.scene) || !(camera instanceof quack.camera.orthoCamera)) {
 			throw new Error("Invalid render arguments");
@@ -47,16 +67,6 @@ quack.renderers.GLRenderer = function(canvas, options) {
 		//For now, have a single object that is to be rendered
 		var target = scene.children[0];
 		
-		
-		//clear buffers
-		this.gl.clear(this.gl.COLOR_BUFFER_BIT);
-		this.gl.clear(this.gl.COLOR_BUFFER_BIT);
-		
-		var iBuffer = this.gl.createBuffer();
-		this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, iBuffer);
-		this.gl.bufferData(this.gl.ELEMENT_ARRAY_BUFFER, target.indices, this.gl.STATIC_DRAW);
-		
-		debugger;
 		this._vertexShader = this._loadShader(this.gl.VERTEX_SHADER, target._renderData.shaders.vertex);
 		this._fragShader = this._loadShader(this.gl.FRAGMENT_SHADER, target._renderData.shaders.frag);
 		
@@ -65,6 +75,26 @@ quack.renderers.GLRenderer = function(canvas, options) {
 		this.gl.linkProgram(this._program);
 		this.gl.useProgram(this._program);
 		this.gl.program = this._program;
+		
+		this._setArrayBuffer(target.vertices, 3, this.gl.FLOAT, "a_position");
+		this._setArrayBuffer(target.colors, 3, this.gl.FLOAT, "a_color");
+		this._setElementArrayBuffer(target.indices);
+		
+		//get location of matrices
+		var u_projMatrix = this.gl.getUniformLocation(this.gl.program, 'u_projMatrix');
+		var u_viewMatrix = this.gl.getUniformLocation(this.gl.program, 'u_viewMatrix');
+		var u_modelMatrix = this.gl.getUniformLocation(this.gl.program, 'u_modelMatrix');
+		
+		//pass the matrices to the shader
+		this.gl.uniformMatrix4fv(u_projMatrix, false, camera.projectionMatrix.elements);
+		this.gl.uniformMatrix4fv(u_viewMatrix, false, camera.viewMatrix.elements);
+		this.gl.uniformMatrix4fv(u_modelMatrix, false, target.modelMatrix.elements);
+		
+		//clear buffers
+		this.gl.clear(this.gl.COLOR_BUFFER_BIT);
+		this.gl.clear(this.gl.COLOR_BUFFER_BIT);
+		//cross your fingers and hope it works
+		this.gl.drawElements(this.gl.TRIANGLES, target.indices.length, this.gl.UNSIGNED_BYTE, 0);
 		
 	};
 	

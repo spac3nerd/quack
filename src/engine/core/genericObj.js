@@ -8,6 +8,7 @@ quack.core.genericObj = function(id) {
 	
 	this.position = new quack.math.vector3(0, 0, 0);
 	this.up = new quack.math.vector3(0, 0, 1);
+	this.setLookaAt = new quack.math.vector3(0, 0, 0);
 	this.scale = new quack.math.vector3(1, 1, 1);
 	this.modelMatrix = new quack.math.matrix4();
 	
@@ -19,6 +20,12 @@ quack.core.genericObj = function(id) {
 	
 	this.setUp = function(x, y, z) {
 		this.up.set(x, y, z);
+		
+		return this;
+	};
+	
+	this.setLookAt = function(x, y, z) {
+		this.setLookaAt.set(x, y, z);
 		
 		return this;
 	};

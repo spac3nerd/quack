@@ -22,6 +22,11 @@ quack.camera.orthoCamera = function(left, right, top, bottom, far, near) {
 		);
 	};
 	
+	this.update = function() {
+		this.updateProjectionMatrix();
+		this.viewMatrix.setLookAt(this.position, this.lookAt, this.up);
+	};
+	
 	this._init = function() {
 		this.updateProjectionMatrix();
 		this.viewMatrix.setLookAt(this.position, this.lookAt, this.up);

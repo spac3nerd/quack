@@ -22,7 +22,10 @@
 	});
 	var scene = new quack.core.scene("scene1");
 	var cubeG = new quack.cubeGeometry(); //at (0,0,0)
-	var camera = new quack.camera.orthoCamera(-1.0, 1.0, 1.0, -1.0, 10, 0);
+	var camera = new quack.camera.orthoCamera(-5.0, 5.0, 5.0, -5.0, 10, 0);
+	camera.setPosition(0, 0, 5);
+	camera.setLookAt(0, 0, 0);
+	camera.update();
 	scene.append(cubeG);
 	
 	renderer.render(scene, camera);
