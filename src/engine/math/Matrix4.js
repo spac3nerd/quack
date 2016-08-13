@@ -146,4 +146,15 @@ quack.math.matrix4 = function() {
 		
 		return this;
 	};
+	
+	this.setScale = function(x, y, z) {
+		this.set(
+			x, 0, 0, 0,
+			0, y, 0, 0,
+			0, 0, z, 0,
+			0, 0, 0, 1
+		);
+		
+		return this;
+	};
 };
