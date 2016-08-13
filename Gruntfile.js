@@ -117,7 +117,6 @@ module.exports = function(grunt) {
 	//grunt.registerTask("get", ["getFile"]);
 	grunt.registerTask("build", ["concat", "concatcss", "minjshint", "uglify"]); //"debugger" statements are not allowed
 	grunt.registerTask("debug", ["concat", "concatcss", "jshint"]); //"debugger" statements are allowed in the development build
-	
 	grunt.registerTask("glsl", ["glslToJS"]);
 	
 	
@@ -126,25 +125,11 @@ module.exports = function(grunt) {
 	//Custom task definitions
 	//****************************
 	
-	
-	//A simple custom file downloader
-	grunt.registerTask("getFile", function() {
-		var done = this.async();
-		var dist = grunt.config("getFile").dist;
-		var dir = dist.dest;
-		
-		var http = require("https");
-		var fs = require("fs");
-		var writeStream = fs.createWriteStream(dist.dest + "/" + dist.name); // dest/name
-		var request = http.get(dist.resource, function(e) {
-			e.pipe(writeStream);
-			e.on("end", function(a) {
-				console.log(dist.name + "-----" + " complete");
-			});
-		});
-	});
-	
-	//A custom task to make GLSL usable
+	/*A custom task to make GLSL usable
+	This works by creating a JavaScript source file (specified by dist.dest) which contains
+	a single object which has a property for each GLSL file (property names are given in dist.objNames and they directly map to 
+	every source file in dist.source). The value of each property is the string representation of the respective GLSL source.
+	*/
 	grunt.registerTask("glslToJS", function() {
 		var done = this.async();
 		var dist = grunt.config("glslToJS").dist;
@@ -152,7 +137,6 @@ module.exports = function(grunt) {
 		var readline = require("linebyline");
 		var r = [];
 		var containerObj = {};
-		
 		var fs = require("fs");
 		
 		for (var k = 0; k < dist.source.length; k++) {
@@ -174,6 +158,22 @@ module.exports = function(grunt) {
 		}
 	});
 	
+	//A simple custom file downloader - currently not in use
+	grunt.registerTask("getFile", function() {
+		var done = this.async();
+		var dist = grunt.config("getFile").dist;
+		var dir = dist.dest;
+		
+		var http = require("https");
+		var fs = require("fs");
+		var writeStream = fs.createWriteStream(dist.dest + "/" + dist.name); // dest/name
+		var request = http.get(dist.resource, function(e) {
+			e.pipe(writeStream);
+			e.on("end", function(a) {
+				console.log(dist.name + "-----" + " complete");
+			});
+		});
+	});
 	
 	grunt.registerTask("concatExp", function() {
 		var task = grunt.config("concatExp");
