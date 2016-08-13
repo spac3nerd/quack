@@ -25,7 +25,7 @@ module.exports = function(grunt) {
 				"src/*.js"
 			]
 		},
-		
+		//minification
 		uglify: {
 			compress: {
 				hoist_funs: false,
@@ -43,7 +43,6 @@ module.exports = function(grunt) {
 			}
 		},
 		//Default concat job
-		
 		concat: {
 			options: {
 				separator: "\n;"
@@ -139,6 +138,7 @@ module.exports = function(grunt) {
 		var containerObj = {};
 		var fs = require("fs");
 		
+		//for each source file
 		for (var k = 0; k < dist.source.length; k++) {
 			r.push(readline(dist.source[k]));
 			r[k].index = k; //add this prop so that the correct index can be retrieved on the end event
@@ -163,7 +163,6 @@ module.exports = function(grunt) {
 		var done = this.async();
 		var dist = grunt.config("getFile").dist;
 		var dir = dist.dest;
-		
 		var http = require("https");
 		var fs = require("fs");
 		var writeStream = fs.createWriteStream(dist.dest + "/" + dist.name); // dest/name
@@ -175,6 +174,7 @@ module.exports = function(grunt) {
 		});
 	});
 	
+	//Simply changes the arguments for the "concat" job
 	grunt.registerTask("concatExp", function() {
 		var task = grunt.config("concatExp");
 		var src = task.dist.src;
@@ -193,7 +193,6 @@ module.exports = function(grunt) {
 		var src = task.dist.src;
 		var dist = task.dist;
 		var options = task.options;
-		
 		grunt.config.set("concat", {
 			options: options,
 			dist: dist
@@ -201,11 +200,11 @@ module.exports = function(grunt) {
 		grunt.task.run("concat");
 	});
 	
+	//JSHint needs different options for the minified build
 	grunt.registerTask("minjshint", function() {
 		var task = grunt.config("minjshint");
 		var all = task.all;
 		var options = task.options;
-		
 		grunt.config.set("jshint", {
 			options: options,
 			all: all
