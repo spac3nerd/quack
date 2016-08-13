@@ -2,7 +2,7 @@ attribute vec4 a_position;
 attribute vec4 a_color;
 uniform mat4 u_projMatrix;
 uniform mat4 u_viewMatrix;
-uniform mat3 u_modelMatrix;
+uniform mat4 u_modelMatrix;
 varying vec4 v_color;
 
 void main() {

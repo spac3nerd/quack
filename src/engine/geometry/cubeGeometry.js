@@ -1,16 +1,19 @@
-//TODO: I think that we can get away with only using 24 vertices per object by implementing indices. 
 quack.cubeGeometry = function(position, width, height, depth) {
 	quack.geometry.call(this);
 	this.type = "cubeGeom";
-	this.width = width || 1;
-	this.height = height || 1;
-	this.depth = depth || 1;
+	this.width = width || 1; //x-direction
+	this.height = height || 1; //y-direction
+	this.depth = depth || 1; //z-direction
+	this.vertices = new Float32Array(48);
+	this.colors = new Float32Array(48);
+	this.indices = new Uint8Array(36);
 	
 	if ( (position === undefined) || (!(position instanceof quack.math.vector3)) ) {
 		this.position = new quack.math.vector3(0, 0, 0);
 	}
 	else {
 		this.position = position;
+		this.modelMatrix.setTranslate(this.position.x, this.position.y, this.position.z);
 	}
 	
 	//calcualte the number of vertices and set the vertices array
@@ -21,7 +24,32 @@ quack.cubeGeometry = function(position, width, height, depth) {
 		return n;
 	};
 	
-	//this._construct
+	this._createCube = function() {
+		this.vertices = [
+			1.0, 1.0, 1.0,  -1.0, 1.0, 1.0,  -1.0,-1.0, 1.0,   1.0,-1.0, 1.0,
+			1.0, 1.0, 1.0,   1.0,-1.0, 1.0,   1.0,-1.0,-1.0,   1.0, 1.0,-1.0,
+			1.0, 1.0, 1.0,   1.0, 1.0,-1.0,  -1.0, 1.0,-1.0,  -1.0, 1.0, 1.0,
+			-1.0, 1.0, 1.0,  -1.0, 1.0,-1.0,  -1.0,-1.0,-1.0,  -1.0,-1.0, 1.0,
+			-1.0,-1.0,-1.0,   1.0,-1.0,-1.0,   1.0,-1.0, 1.0,  -1.0,-1.0, 1.0,
+			1.0,-1.0,-1.0,  -1.0,-1.0,-1.0,  -1.0, 1.0,-1.0,   1.0, 1.0,-1.0
+		];
+		this.colors = [
+			0.4, 0.4, 1.0,  0.4, 0.4, 1.0,  0.4, 0.4, 1.0,  0.4, 0.4, 1.0,
+			0.4, 1.0, 0.4,  0.4, 1.0, 0.4,  0.4, 1.0, 0.4,  0.4, 1.0, 0.4,
+			1.0, 0.4, 0.4,  1.0, 0.4, 0.4,  1.0, 0.4, 0.4,  1.0, 0.4, 0.4,
+			1.0, 1.0, 0.4,  1.0, 1.0, 0.4,  1.0, 1.0, 0.4,  1.0, 1.0, 0.4,
+			1.0, 1.0, 1.0,  1.0, 1.0, 1.0,  1.0, 1.0, 1.0,  1.0, 1.0, 1.0,
+			0.4, 1.0, 1.0,  0.4, 1.0, 1.0,  0.4, 1.0, 1.0,  0.4, 1.0, 1.0
+		];
+		this.indices = [
+			0, 1, 2,   0, 2, 3,
+			4, 5, 6,   4, 6, 7,
+			8, 9,10,   8,10,11,
+			12,13,14,  12,14,15,
+			16,17,18,  16,18,19,
+			20,21,22,  20,22,23
+		];
+	};
 	
 	
 	this.update = function() {
@@ -29,6 +57,8 @@ quack.cubeGeometry = function(position, width, height, depth) {
 	};
 	this._init = function() {
 		this.vertices = new Float32Array(this._numberOfVertices());
-		
+		this._createCube();
+		this._renderData.shaders.vertex = quack.shaders.flatVertex;
+		this._renderData.shaders.frag = quack.shaders.flatFrag;
 	}.call(this);
 }; 

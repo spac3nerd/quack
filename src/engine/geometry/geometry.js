@@ -8,6 +8,9 @@ quack.geometry = function() {
 	
 	this.isSolidColor = true; //by default, all vertices have the same color. Per vertex color may be specified later
 	this.solidColor = new quack.math.vector3(1, 0, 0); //default solid color
+	this._renderData = {
+		shaders: {}
+	};
 	
 	//color can be a vector3, or a simple object with x/y/z properties
 	this.setSolidColor = function(color) {

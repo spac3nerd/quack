@@ -9,6 +9,7 @@ quack.core.genericObj = function(id) {
 	this.position = new quack.math.vector3(0, 0, 0);
 	this.up = new quack.math.vector3(0, 0, 1);
 	this.scale = new quack.math.vector3(1, 1, 1);
+	this.modelMatrix = new quack.math.matrix4();
 	
 	this.setPosition = function(x, y ,z) {
 		this.position.set(x, y ,z);
