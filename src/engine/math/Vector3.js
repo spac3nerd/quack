@@ -128,6 +128,7 @@ quack.math.vector3 = function(x, y ,z) {
 		return this.x * v.x + this.y * v.y + this.z * v.z;
 	};
 	
+	//set this vector to the result of this X a
 	this.crossProduct = function(a) {
 		this.x = this.y * a.z - this.z * a.y;
 		this.y = this.z * a.x - this.x * a.z;
@@ -136,6 +137,7 @@ quack.math.vector3 = function(x, y ,z) {
 		return this;
 	};
 	
+	//set this vector to the result of a X b
 	this.crossVectors = function(a, b) {
 		this.x = a.y * b.z - a.z * b.y;
 		this.y = a.z * b.x - a.x * b.z;
