@@ -76,8 +76,27 @@ quack.math.matrix4 = function() {
 	
 	
 	this.setLookAt = function(pos, lookAt, up) {
-		var t = new quack.math.vector3().subVectors(lookAt, pos).normal();
-		var upNorm = up.normal();
+		//debugger;
+		var t = new quack.math.vector3().subVectors(pos, lookAt).setNormal();
+		if (t.length() === 0) {
+			t.set(0, 0, 1);
+		}
+		var upNorm = up.setNormal();
+		var a = new quack.math.vector3().crossVectors(upNorm, t).setNormal();
+		if (a.length() === 0) {
+			t.z += 0.001;
+			a = new quack.math.vector3().crossVectors(upNorm, t).setNormal();
+		}
+		var b = new quack.math.vector3().crossVectors(t, a);
+		this.set(
+			a.x, b.x, t.x, 0,
+			a.y, b.y, t.y, 0,
+			a.z, b.z, t.z, 0,
+			0, 0, 0, 1
+		);
+		/*
+		var t = new quack.math.vector3().subVectors(lookAt, pos).setNormal();
+		var upNorm = up.setNormal();
 		var a = new quack.math.vector3().crossVectors(t, upNorm);
 		var b = new quack.math.vector3().crossVectors(a, t);
 		var M = new quack.math.matrix4().set(
@@ -88,7 +107,7 @@ quack.math.matrix4 = function() {
 		);
 		var T = new quack.math.matrix4().setTranslate(-pos.x, -pos.y, -pos.z);
 		this.multMatrices(M, T);
-		
+		*/
 		return this;
 	};
 	

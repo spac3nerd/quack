@@ -123,10 +123,18 @@ quack.math.vector4 = function(x, y ,z, w) {
 	
 	//multiply this vector with scalar a
 	this.multScalar = function(a) {
-		this.x = this.x * a;
-		this.y = this.y * a;
-		this.z = this.z * a;
-		this.w = this.w * a;
+		if (!isFinite(a)) {
+			this.x = 0;
+			this.y = 0;
+			this.z = 0;
+			this.w = 0;
+		}
+		else {
+			this.x = this.x * a;
+			this.y = this.y * a;
+			this.z = this.z * a;
+			this.w = this.w * a;
+		}
 		
 		return this;
 	};

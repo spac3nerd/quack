@@ -1,12 +1,10 @@
-quack.camera.orthographicCamera = function(left, right, top, bottom, far, near) {
+quack.camera.perspectiveCamera = function(aspect, fov, far, near) {
 	quack.core.genericObj.call(this);
 	
-	this.left = left;
-	this.right = right;
-	this.top = top;
-	this.bottom = bottom;
-	this.far = far;
-	this.near = near;
+	this.aspect = aspect || 1;
+	this.fov = fov || 45;
+	this.far = far || 1;
+	this.near = near || 0;
 	
 	this.lookAt = new quack.math.vector3(0, 0, 0);
 	
@@ -14,11 +12,13 @@ quack.camera.orthographicCamera = function(left, right, top, bottom, far, near) 
 	this.viewMatrix = new quack.math.matrix4();
 	
 	this.updateProjectionMatrix = function() {
+		var f = ((Math.PI / 180) * fov) / 2;
+		var cot = Math.atan(f);
 		this.projectionMatrix.set(
-			2 / (right - left), 0, 0, -((right + left) / (right - left)),
-			0, 2 / (top - bottom), 0, -((top + bottom) / (top - bottom)),
-			0, 0, ((-2) / (far - near)), -((far + near) / (far - near)),
-			0, 0, 0 ,1
+			cot / aspect, 0, 0, 0,
+			0, cot, 0, 0,
+			0, 0, (far + near) / (near - far), (2 * near * far) / (near - far),
+			0, 0, -1, 0
 		);
 	};
 	

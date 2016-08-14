@@ -61,6 +61,7 @@ module.exports = function(grunt) {
 					"src/engine/geometry/cubeGeometry.js",
 					"src/engine/geometry/triangleGeometry.js",
 					"src/engine/camera/orthographicCamera.js",
+					"src/engine/camera/perspectiveCamera.js",
 					"src/engine/renderers/GLRenderer.js"
 				],
 				dest: "dist/js/readable/quack.js"

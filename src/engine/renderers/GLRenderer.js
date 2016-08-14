@@ -74,7 +74,7 @@ quack.renderers.GLRenderer = function(canvas, options) {
 	};
 	
 	this.render = function(scene, camera) {
-		if ( !(scene instanceof quack.core.scene) || !(camera instanceof quack.camera.orthoCamera)) {
+		if ( !(scene instanceof quack.core.scene) || (!(camera instanceof quack.camera.orthographicCamera) && !(camera instanceof quack.camera.perspectiveCamera)) ) {
 			throw new Error("Invalid render arguments");
 		}
 		
