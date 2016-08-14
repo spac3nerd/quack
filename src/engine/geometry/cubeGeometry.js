@@ -7,7 +7,6 @@ quack.cubeGeometry = function(position, width, height, depth) {
 	this.vertices = undefined;
 	this.colors = undefined;
 	this.indices = undefined;
-	this.modelMatrix = new quack.math.matrix4();
 	
 	if ( (position === undefined) || (!(position instanceof quack.math.vector3)) ) {
 		this.position = new quack.math.vector3(0, 0, 0);

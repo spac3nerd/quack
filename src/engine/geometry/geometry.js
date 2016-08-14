@@ -5,6 +5,7 @@ quack.geometry = function() {
 	this.vertices = undefined; //Let those that inherit from geometry decide what to use this for
 	this.colors = undefined; //per vertex color definition.
 	this.scale = new quack.math.vector3(1, 1, 1); //span of geometry in x/y/z directions
+	this.modelMatrix = new quack.math.matrix4();
 	
 	this.isSolidColor = true; //by default, all vertices have the same color. Per vertex color may be specified later
 	this.solidColor = new quack.math.vector3(1, 0, 0); //default solid color
@@ -26,5 +27,11 @@ quack.geometry = function() {
 				this.colors = colors;
 			}
 		}
+	};
+	
+	
+	this.setScale = function(x, y, z) {
+		this.scale.set(x, y, z);
+		this.modelMatrix.multMatrices(this.modelMatrix, new quack.math.matrix4().setScale(x, y, z));
 	};
 }; 

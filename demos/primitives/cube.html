@@ -10,6 +10,8 @@
 			
 		</canvas>
 	</div>
+	<input type="text" placeholder="scaleX" id="scaleX"/><input type="text" placeholder="scaleY" id="scaleY"/><input type="text" placeholder="scaleZ" id="scaleZ"/><br>
+	<input type="button" value="apply" id="apply"/>
 </body>
 
 <script type="text/javascript">
@@ -23,11 +25,22 @@
 	var scene = new quack.core.scene("scene1");
 	var cubeG = new quack.cubeGeometry(); //at (0,0,0)
 	var camera = new quack.camera.orthoCamera(-1.0, 1.0, 1.0, -1.0, 10, 0);
-	camera.setPosition(2, 2, 5);
+	camera.setPosition(1, 2, 5);
 	camera.setLookAt(0, 0, 0);
 	camera.update();
 	scene.append(cubeG);
 	
 	renderer.render(scene, camera);
+	
+	var scaleX = document.getElementById("scaleX");
+	var scaleY = document.getElementById("scaleY");
+	var scaleZ = document.getElementById("scaleZ");
+	var button = document.getElementById("apply");
+	button.onclick = function(e) {
+		//debugger;
+		var valX = Number(scaleX.value) || 1, valY = Number(scaleY.value) || 1, valZ = Number(scaleZ.value) || 1;
+		cubeG.setScale(valX, valY, valZ);
+		renderer.render(scene, camera);
+	};
 	
 </script>
