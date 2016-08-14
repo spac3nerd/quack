@@ -7,7 +7,7 @@ quack.core.genericObj = function(id) {
 	this.children = [];
 	
 	this.position = new quack.math.vector3(0, 0, 0);
-	this.up = new quack.math.vector3(0, 0, 1);
+	this.up = new quack.math.vector3(0, 1, 0);
 	this.lookAt = new quack.math.vector3(0, 0, 0);
 	this.scale = new quack.math.vector3(1, 1, 1);
 	this.modelMatrix = new quack.math.matrix4();

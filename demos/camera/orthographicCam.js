@@ -7,10 +7,11 @@ function initDemo() {
 		antialias: true
 	});
 	var scene = new quack.core.scene("scene1");
-	var triangles = [];//new quack.triangleGeometry(); //at (0,0,0)
+	var triangles = [];
 	var camera = new quack.camera.orthoCamera(-5.0, 5.0, 5.0, -5.0, 100, 0);
-	camera.setPosition(0, -3, 5);
+	camera.setPosition(0, 4, 6);
 	camera.setLookAt(0, 0, 0);
+	//debugger;
 	camera.update();
 	
 	
