@@ -92,7 +92,7 @@ quack.renderers.GLRenderer = function(canvas, options) {
 		
 		//clear buffers
 		this.gl.clear(this.gl.COLOR_BUFFER_BIT);
-		this.gl.clear(this.gl.COLOR_BUFFER_BIT);
+		this.gl.clear(this.gl.DEPTH_BUFFER_BIT);
 		//cross your fingers and hope it works
 		this.gl.drawElements(this.gl.TRIANGLES, target.indices.length, this.gl.UNSIGNED_BYTE, 0);
 		
@@ -101,8 +101,9 @@ quack.renderers.GLRenderer = function(canvas, options) {
 	this._init = function() {
 		this.gl = canvas.getContext("webgl", this.contextOptions);
 		this.gl.clearColor(this.clearColor.x, this.clearColor.y, this.clearColor.z, this.clearColor.w);
-		this.gl.clear(this.gl.COLOR_BUFFER_BIT);
 		this.gl.enable(this.gl.DEPTH_TEST);
+		this.gl.clear(this.gl.COLOR_BUFFER_BIT);
+		this.gl.clear(this.gl.DEPTH_BUFFER_BIT);
 		this._program = this.gl.createProgram();
 	}.call(this);
 }; 
