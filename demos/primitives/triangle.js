@@ -9,7 +9,7 @@ function initDemo() {
 	var scene = new quack.core.scene("scene1");
 	var triangle = new quack.triangleGeometry(); //at (0,0,0)
 	var camera = new quack.camera.orthoCamera(-1.0, 1.0, 1.0, -1.0, 100, 0);
-	camera.setPosition(0, 0, -5);
+	camera.setPosition(0, 0, 5);
 	camera.setLookAt(0, 0, 0);
 	camera.update();
 	scene.append(triangle);

@@ -20,8 +20,7 @@ quack.cubeGeometry = function(position, width, height, depth) {
 	//TODO: Eventually, cube geometry can take the number of triangles per side as an argument,
 	//	at which point this function becomes more useful
 	this._numberOfVertices = function() {
-		var n = 12 * 3 * 3; //2 triangles per side, 3 vertices per triangle, each vertex has 3 elements
-		return n;
+		return 0;
 	};
 	
 	this._createCube = function() {

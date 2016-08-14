@@ -84,8 +84,8 @@ or
 	$ grunt debug
 
 #### Production build
-The production build runs JSHint and minifies grapher.js into grapher-min.js which is then placed in dist/js/min.
-It depends on /dist/js/readable/grapher.js existing (created by debug build), and it does not allow debugger statements.
+The production build runs JSHint and minifies quack.js into quack-min.js which is then placed in dist/js/min.
+It depends on /dist/js/readable/quack.js existing (created by debug build), and it does not allow debugger statements.
 
 	$ grunt build
 	
