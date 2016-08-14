@@ -34,4 +34,14 @@ quack.geometry = function() {
 		this.scale.set(x, y, z);
 		this.modelMatrix.multMatrices(this.modelMatrix, new quack.math.matrix4().setScale(x, y, z));
 	};
+	
+	this.setRotateX = function(angle) {
+		this.modelMatrix.multMatrices(this.modelMatrix, new quack.math.matrix4().setRotateX(angle));
+	};
+	this.setRotateY = function(angle) {
+		this.modelMatrix.multMatrices(this.modelMatrix, new quack.math.matrix4().setRotateY(angle));
+	};
+	this.setRotateZ = function(angle) {
+		this.modelMatrix.multMatrices(this.modelMatrix, new quack.math.matrix4().setRotateZ(angle));
+	};
 }; 
