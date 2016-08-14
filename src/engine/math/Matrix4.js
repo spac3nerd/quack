@@ -96,7 +96,9 @@ quack.math.matrix4 = function() {
 			a.z, b.z, t.z, 0,
 			0, 0, 0, 1
 		);
-		console.log(this.elements);
+		var T = new quack.math.matrix4().setTranslate(0, 0, -pos.z);
+		this.multMatrices(this, T);
+
 		/*
 		var t = new quack.math.vector3().subVectors(lookAt, pos).setNormal();
 		var upNorm = up.setNormal();

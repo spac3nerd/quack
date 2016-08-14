@@ -13,10 +13,10 @@ quack.camera.perspectiveCamera = function(aspect, fov, far, near) {
 	
 	this.updateProjectionMatrix = function() {
 		var f = ((Math.PI / 180) * fov) / 2;
-		var cot = Math.atan(f);
+		var c = Math.cos(f) / Math.sin(f);
 		this.projectionMatrix.set(
-			cot / aspect, 0, 0, 0,
-			0, cot, 0, 0,
+			c / aspect, 0, 0, 0,
+			0, c, 0, 0,
 			0, 0, (far + near) / (near - far), (2 * near * far) / (near - far),
 			0, 0, -1, 0
 		);

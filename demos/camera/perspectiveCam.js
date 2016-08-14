@@ -8,10 +8,10 @@ function initDemo() {
 	});
 	var scene = new quack.core.scene("scene1");
 	var triangles = [];
-	var camera = new quack.camera.perspectiveCamera(canvas.clientWidth / canvas.clientHeight, 45, 100, 0);
-	camera.setPosition(0, 4, 6);
-	camera.setLookAt(0, 0, 0);
-	//debugger;
+	var camera = new quack.camera.perspectiveCamera(canvas.clientWidth / canvas.clientHeight, 60, 20, 1);
+	camera.setPosition(0, 0, 5);
+	camera.setLookAt(0, 0, -4);
+	debugger;
 	camera.update();
 	
 	
@@ -22,9 +22,9 @@ function initDemo() {
 		for (var n = 0; n < 5; n++) {
 			temp = new quack.triangleGeometry();
 			
-			temp.setPosition(3 * (k - 1), 0, 2 * n);
+			temp.setPosition(3 * (k - 1), 0, -(2 * n));
 			temp.setSolidColor(new quack.math.vector3((k + 1)/ 3, (n + 1) / 5, 0.0));
-			console.log(temp.solidColor);
+			console.log(temp.position);
 			triangles.push(temp);
 			scene.append(temp);
 		}
