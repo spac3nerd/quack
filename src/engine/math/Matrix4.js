@@ -127,7 +127,7 @@ quack.math.matrix4 = function() {
 		
 		this.set(
 			a, -b, 0, 0,
-			-b, a, 0, 0,
+			b, a, 0, 0,
 			0, 0, 1, 0,
 			0, 0, 0, 1
 		);
