@@ -29,8 +29,6 @@ quack.triangleGeometry = function(position, width, height) {
 		]);
 	};
 	
-	
-	
 	this._init = function() {
 		this._createTriangle();
 		this._createColors();
