@@ -15,9 +15,9 @@ quack.math.matrix3 = function() {
 	this.setIdentity();
 	
 	this.set = function(e00, e01, e02, e10, e11, e12, e20, e21, e22) {
-		this.elements[0] = e00 || 1, this.elements[3] = e01 || 0, this.elements[6] = e02 || 0,
-		this.elements[1] = e10 || 0, this.elements[4] = e11 || 1, this.elements[7] = e12 || 0,
-		this.elements[2] = e20 || 0, this.elements[5] = e21 || 0, this.elements[8] = e22 || 1;
+		this.elements[0] = e00, this.elements[3] = e01, this.elements[6] = e02,
+		this.elements[1] = e10, this.elements[4] = e11, this.elements[7] = e12,
+		this.elements[2] = e20, this.elements[5] = e21, this.elements[8] = e22;
 		
 		return this;
 	};

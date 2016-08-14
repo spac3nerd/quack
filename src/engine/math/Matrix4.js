@@ -17,10 +17,10 @@ quack.math.matrix4 = function() {
 	
 	//Row-major arguments. 
 	this.set = function(e00, e01, e02, e03, e10, e11, e12, e13, e20, e21, e22, e23, e30, e31, e32, e33) {
-		this.elements[0] = e00 || 1, this.elements[4] = e01 || 0, this.elements[8] = e02 || 0, this.elements[12] = e03 || 0,
-		this.elements[1] = e10 || 0, this.elements[5] = e11 || 1, this.elements[9] = e12 || 0, this.elements[13] = e13 || 0,
-		this.elements[2] = e20 || 0, this.elements[6] = e21 || 0, this.elements[10] = e22 || 1, this.elements[14] = e23 || 0,
-		this.elements[3] = e30 || 0, this.elements[7] = e31 || 0, this.elements[11] = e32 || 0, this.elements[15] = e33 || 1;
+		this.elements[0] = e00, this.elements[4] = e01, this.elements[8] = e02, this.elements[12] = e03,
+		this.elements[1] = e10, this.elements[5] = e11, this.elements[9] = e12, this.elements[13] = e13,
+		this.elements[2] = e20, this.elements[6] = e21, this.elements[10] = e22, this.elements[14] = e23,
+		this.elements[3] = e30, this.elements[7] = e31, this.elements[11] = e32, this.elements[15] = e33;
 		
 		return this;
 	};
@@ -77,6 +77,7 @@ quack.math.matrix4 = function() {
 	
 	this.setLookAt = function(pos, lookAt, up) {
 		//debugger;
+		
 		var t = new quack.math.vector3().subVectors(pos, lookAt).setNormal();
 		if (t.length() === 0) {
 			t.set(0, 0, 1);
@@ -93,12 +94,12 @@ quack.math.matrix4 = function() {
 			a.y, b.y, t.y, 0,
 			a.z, b.z, t.z, 0,
 			0, 0, 0, 1
-		);
+		); 
 		/*
 		var t = new quack.math.vector3().subVectors(lookAt, pos).setNormal();
 		var upNorm = up.setNormal();
-		var a = new quack.math.vector3().crossVectors(t, upNorm);
-		var b = new quack.math.vector3().crossVectors(a, t);
+		var a = new quack.math.vector3().crossVectors(t, upNorm).setNormal();
+		var b = new quack.math.vector3().crossVectors(a, t).setNormal();
 		var M = new quack.math.matrix4().set(
 			a.x, a.y, a.z, 0,
 			b.x, b.y, b.z, 0,
