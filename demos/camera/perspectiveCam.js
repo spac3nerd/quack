@@ -8,9 +8,10 @@ function initDemo() {
 	});
 	var scene = new quack.core.scene("scene1");
 	var triangles = [];
-	var camera = new quack.camera.orthographicCamera(-5.0, 5.0, 5.0, -5.0, 100, 0);
+	var camera = new quack.camera.perspectiveCamera(canvas.clientWidth / canvas.clientHeight, 45, 100, 0);
 	camera.setPosition(0, 4, 6);
 	camera.setLookAt(0, 0, 0);
+	//debugger;
 	camera.update();
 	
 	
