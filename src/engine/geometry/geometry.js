@@ -20,6 +20,12 @@ quack.geometry = function() {
 		this.solidColor.z = color.z;
 	};
 	
+	//colors - Float32Array
+	this.setColors = function(colors) {
+		this.colors = colors;
+		this.isSolidColor = false;
+	};
+	
 	//colors must be a float32array of the same length as vertices
 	this.setPerVertexColor = function(colors) {
 		if (colors instanceof Float32Array) {

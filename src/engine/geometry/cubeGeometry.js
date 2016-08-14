@@ -56,8 +56,8 @@ quack.cubeGeometry = function(position, width, height, depth) {
 		return this;
 	};
 	this._init = function() {
-		this.vertices = new Float32Array(this._numberOfVertices());
 		this._createCube();
+		//TODO: This should not be hardcoded once different material types are added
 		this._renderData.shaders.vertex = quack.shaders.flatVertex;
 		this._renderData.shaders.frag = quack.shaders.flatFrag;
 	}.call(this);
