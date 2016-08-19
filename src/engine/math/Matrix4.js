@@ -116,6 +116,26 @@ quack.math.matrix4 = function() {
 		return this;
 	};
 	
+	//apply rotation to this matrix
+	this.rotateX = function(angle) {
+		this.multMatrices(this, quack.math.matrix4().setRotateX(angle));
+		
+		return this;
+	};
+	
+	//apply rotation to this matrix
+	this.rotateY = function(angle) {
+		this.multMatrices(this, quack.math.matrix4().setRotateY(angle));
+		
+		return this;
+	};
+	
+	//apply rotation to this matrix
+	this.rotateZ = function(angle) {
+		this.multMatrices(this, quack.math.matrix4().setRotateZ(angle));
+		
+		return this;
+	};
 	
 	//set this matrix for rotation about the x axis
 	this.setRotateX = function(angle) {
@@ -171,6 +191,13 @@ quack.math.matrix4 = function() {
 		return this;
 	};
 	
+	//apply scale to this matrix
+	this.scale = function(x, y, z) {
+		this.multMatrices(this, quack.math.matrix4().setScale(x, y, z));
+		
+		return this;
+	};
+	
 	this.setScale = function(x, y, z) {
 		this.set(
 			x, 0, 0, 0,
@@ -181,4 +208,6 @@ quack.math.matrix4 = function() {
 		
 		return this;
 	};
+	
+	return this;
 };

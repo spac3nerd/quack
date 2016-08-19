@@ -57,17 +57,17 @@ quack.geometry = function() {
 	};
 	
 	this.setRotateX = function(angle) {
-		this.modelMatrix.multMatrices(this.modelMatrix, new quack.math.matrix4().setRotateX(angle));
+		this.modelMatrix.rotateX(angle);
 		
 		return this;
 	};
 	this.setRotateY = function(angle) {
-		this.modelMatrix.multMatrices(this.modelMatrix, new quack.math.matrix4().setRotateY(angle));
+		this.modelMatrix.rotateY(angle);
 		
 		return this;
 	};
 	this.setRotateZ = function(angle) {
-		this.modelMatrix.multMatrices(this.modelMatrix, new quack.math.matrix4().setRotateZ(angle));
+		this.modelMatrix.rotateZ(angle);
 		
 		return this;
 	};
