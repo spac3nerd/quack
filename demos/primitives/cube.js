@@ -8,8 +8,8 @@ function initDemo() {
 	});
 	var scene = new quack.core.scene("scene1");
 	var cubeG = new quack.cubeGeometry(); //at (0,0,0)
-	var camera = new quack.camera.orthographicCamera(-1.0, 1.0, 1.0, -1.0, 100, 0);
-	camera.setPosition(1, 2, 5);
+	var camera = new quack.camera.orthographicCamera(-2.0, 2.0, 2.0, -2.0, 100, 0);
+	camera.setPosition(0, 0, 5);
 	camera.setLookAt(0, 0, 0);
 	camera.update();
 	scene.append(cubeG);

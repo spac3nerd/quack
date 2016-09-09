@@ -77,6 +77,45 @@ quack.math.matrix4 = function() {
 	
 	
 	this.setLookAt = function(pos, lookAt, up) {
+		//debugger;
+		/*
+		var t = new quack.math.vector3().subVectors(pos, lookAt).setNormal();
+		if (t.length() === 0) {
+			t.set(0, 0, 1);
+		}
+		var upNorm = up.setNormal();
+		var a = new quack.math.vector3().crossVectors(upNorm, t).setNormal();
+		if (a.length() === 0) {
+			t.z += 0.001;
+			a = new quack.math.vector3().crossVectors(upNorm, t).setNormal();
+		}
+		var b = new quack.math.vector3().crossVectors(t, a);
+		this.set(
+			a.x, b.x, t.x, 0,
+			a.y, b.y, t.y, 0,
+			a.z, b.z, t.z, 0,
+			0, 0, 0, 1
+		);
+		var T = new quack.math.matrix4().setTranslate(0, 0, -pos.z);
+		this.multMatrices(this, T);
+		*/
+		
+		/*
+		debugger;
+		var upNorm = up.setNormal();
+		var z = new quack.math.vector3().subVectors(pos, lookAt).setNormal();
+		var x = new quack.math.vector3().crossVectors(upNorm, z).setNormal();
+		var y = new quack.math.vector3().crossVectors(z, x).setNormal();
+		this.set(
+			x.x, x.y, x.z, 0,
+			y.x, y.y, y.z, 0,
+			z.x, z.y, z.z, 0,
+			pos.x, pos.y, pos.z, 1
+		);//.setInverse();
+		this.setInverse();
+		return this;
+		*/
+		
 		var t = new quack.math.vector3().subVectors(lookAt, pos).setNormal();
 		var upNorm = up.setNormal();
 		var a = new quack.math.vector3().crossVectors(t, upNorm).setNormal();
