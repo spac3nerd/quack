@@ -77,29 +77,6 @@ quack.math.matrix4 = function() {
 	
 	
 	this.setLookAt = function(pos, lookAt, up) {
-		//debugger;
-		
-		var t = new quack.math.vector3().subVectors(pos, lookAt).setNormal();
-		if (t.length() === 0) {
-			t.set(0, 0, 1);
-		}
-		var upNorm = up.setNormal();
-		var a = new quack.math.vector3().crossVectors(upNorm, t).setNormal();
-		if (a.length() === 0) {
-			t.z += 0.001;
-			a = new quack.math.vector3().crossVectors(upNorm, t).setNormal();
-		}
-		var b = new quack.math.vector3().crossVectors(t, a);
-		this.set(
-			a.x, b.x, t.x, 0,
-			a.y, b.y, t.y, 0,
-			a.z, b.z, t.z, 0,
-			0, 0, 0, 1
-		);
-		var T = new quack.math.matrix4().setTranslate(0, 0, -pos.z);
-		this.multMatrices(this, T);
-
-		/*
 		var t = new quack.math.vector3().subVectors(lookAt, pos).setNormal();
 		var upNorm = up.setNormal();
 		var a = new quack.math.vector3().crossVectors(t, upNorm).setNormal();
@@ -112,10 +89,41 @@ quack.math.matrix4 = function() {
 		);
 		var T = new quack.math.matrix4().setTranslate(-pos.x, -pos.y, -pos.z);
 		this.multMatrices(M, T);
-		*/
-		return this;
+		
+		return this; 
 	};
 	
+	this.setInverse = function() {
+		
+		var e = this.elements;
+		var t = new Float32Array(16);
+		
+		var e00 = e[0], e01 = e[4], e02 = e[8], e03 = e[12];
+		var e10 = e[1], e11 = e[5], e12 = e[9], e13 = e[13];
+		var e20 = e[2], e21 = e[6], e22 = e[10], e23 = e[14];
+		var e30 = e[3], e31 = e[7], e32 = e[11], e33 = e[15];
+
+		t[0] = e12 * e23 * e31 - e13 * e22 * e31 + e13 * e21 * e32 - e11 * e23 * e32 - e12 * e21 * e33 + e11 * e22 * e33;
+		t[4] = e03 * e22 * e31 - e02 * e23 * e31 - e03 * e21 * e32 + e01 * e23 * e32 + e02 * e21 * e33 - e01 * e22 * e33;
+		t[8] = e02 * e13 * e31 - e03 * e12 * e31 + e03 * e11 * e32 - e01 * e13 * e32 - e02 * e11 * e33 + e01 * e12 * e33;
+		t[12] = e03 * e12 * e21 - e02 * e13 * e21 - e03 * e11 * e22 + e01 * e13 * e22 + e02 * e11 * e23 - e01 * e12 * e23;
+		t[1] = e13 * e22 * e30 - e12 * e23 * e30 - e13 * e20 * e32 + e10 * e23 * e32 + e12 * e20 * e33 - e10 * e22 * e33;
+		t[5] = e02 * e23 * e30 - e03 * e22 * e30 + e03 * e20 * e32 - e00 * e23 * e32 - e02 * e20 * e33 + e00 * e22 * e33;
+		t[9] = e03 * e12 * e30 - e02 * e13 * e30 - e03 * e10 * e32 + e00 * e13 * e32 + e02 * e10 * e33 - e00 * e12 * e33;
+		t[13] = e02 * e13 * e20 - e03 * e12 * e20 + e03 * e10 * e22 - e00 * e13 * e22 - e02 * e10 * e23 + e00 * e12 * e23;
+		t[2] = e11 * e23 * e30 - e13 * e21 * e30 + e13 * e20 * e31 - e10 * e23 * e31 - e11 * e20 * e33 + e10 * e21 * e33;
+		t[6] = e03 * e21 * e30 - e01 * e23 * e30 - e03 * e20 * e31 + e00 * e23 * e31 + e01 * e20 * e33 - e00 * e21 * e33;
+		t[10] = e01 * e13 * e30 - e03 * e11 * e30 + e03 * e10 * e31 - e00 * e13 * e31 - e01 * e10 * e33 + e00 * e11 * e33;
+		t[14] = e03 * e11 * e20 - e01 * e13 * e20 - e03 * e10 * e21 + e00 * e13 * e21 + e01 * e10 * e23 - e00 * e11 * e23;
+		t[3] = e12 * e21 * e30 - e11 * e22 * e30 - e12 * e20 * e31 + e10 * e22 * e31 + e11 * e20 * e32 - e10 * e21 * e32;
+		t[7] = e01 * e22 * e30 - e02 * e21 * e30 + e02 * e20 * e31 - e00 * e22 * e31 - e01 * e20 * e32 + e00 * e21 * e32;
+		t[11] = e02 * e11 * e30 - e01 * e12 * e30 - e02 * e10 * e31 + e00 * e12 * e31 + e01 * e10 * e32 - e00 * e11 * e32;
+		t[15] = e01 * e12 * e20 - e02 * e11 * e20 + e02 * e10 * e21 - e00 * e12 * e21 - e01 * e10 * e22 + e00 * e11 * e22;
+		
+		this.elements = t;
+		 
+		return this;
+	};
 	
 	//set this matrix for rotation about the x axis
 	this.setRotateX = function(angle) {

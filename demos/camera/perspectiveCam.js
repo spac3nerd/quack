@@ -10,8 +10,7 @@ function initDemo() {
 	var triangles = [];
 	var camera = new quack.camera.perspectiveCamera(canvas.clientWidth / canvas.clientHeight, 60, 20, 1);
 	camera.setPosition(0, 0, 5);
-	camera.setLookAt(0, 0, -4);
-	debugger;
+	camera.setLookAt(0, 1, -4);
 	camera.update();
 	
 	

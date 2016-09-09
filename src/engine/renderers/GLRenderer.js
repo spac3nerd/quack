@@ -7,6 +7,7 @@ options {
 */
 quack.renderers.GLRenderer = function(canvas, options) {
 	//constructor
+	debugger;
 	this.canvas = canvas;
 	this.id = options.id || "default";
 	this.width = canvas.clientWidth;
@@ -24,7 +25,8 @@ quack.renderers.GLRenderer = function(canvas, options) {
 		alpha: options.alpha || false,
 		antialias: options.antialias || false,
 		stencil: options.stencil || false,
-		depth: options.depth || false
+		depth: options.depth || true,
+		preserveDrawingBuffer: options.preserveDrawingBuffer || false
 	};
 	
 	
@@ -44,6 +46,8 @@ quack.renderers.GLRenderer = function(canvas, options) {
 		var buffer = this.gl.createBuffer();
 		this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, buffer);
 		this.gl.bufferData(this.gl.ELEMENT_ARRAY_BUFFER, data, this.gl.STATIC_DRAW);
+		
+		return buffer;
 	};
 	
 	this._setArrayBuffer = function(data, n, type, attr) {
@@ -57,7 +61,8 @@ quack.renderers.GLRenderer = function(canvas, options) {
 		}
 		this.gl.vertexAttribPointer(a_attr, n, type, false, 0, 0);
 		this.gl.enableVertexAttribArray(a_attr);
-		//this.gl.bindBuffer(this.gl.ARRAY_BUFFER, null);
+		
+		return buffer;
 	};
 	
 	this._attachShaders = function(data) {
@@ -67,6 +72,17 @@ quack.renderers.GLRenderer = function(canvas, options) {
 		this.gl.attachShader(this._program, this._vertexShader);
 		this.gl.attachShader(this._program, this._fragShader);
 		this.gl.linkProgram(this._program);
+		
+		//check
+		var linkStatus = this.gl.getProgramParameter(this._program, this.gl.LINK_STATUS);
+		if (!linkStatus) {
+			var e = this.gl.getProgramInfoLog(this._program);
+			console.log("Error in linking!!!");
+			console.log(e);
+			
+			return;
+		}
+		
 		this.gl.useProgram(this._program);
 		this.gl.program = this._program;
 		
@@ -79,8 +95,8 @@ quack.renderers.GLRenderer = function(canvas, options) {
 		}
 		
 		//clear buffers
-		this.gl.clear(this.gl.COLOR_BUFFER_BIT);
-		this.gl.clear(this.gl.DEPTH_BUFFER_BIT);
+		this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
+		
 		var target;
 		
 		//This needs to account for all children at any depth, but this is fine for now
@@ -92,9 +108,9 @@ quack.renderers.GLRenderer = function(canvas, options) {
 				this._attachShaders(target._renderData);
 			}
 			
-			this._setArrayBuffer(target.vertices, 3, this.gl.FLOAT, "a_position");
-			this._setArrayBuffer(target.colors, 3, this.gl.FLOAT, "a_color");
-			this._setElementArrayBuffer(target.indices);
+			var a = this._setArrayBuffer(target.vertices, 3, this.gl.FLOAT, "a_position");
+			var b = this._setArrayBuffer(target.colors, 3, this.gl.FLOAT, "a_color");
+			var c = this._setElementArrayBuffer(target.indices);
 			
 			//get location of matrices
 			var u_projMatrix = this.gl.getUniformLocation(this.gl.program, 'u_projMatrix');
@@ -107,6 +123,7 @@ quack.renderers.GLRenderer = function(canvas, options) {
 			this.gl.uniformMatrix4fv(u_modelMatrix, false, target.modelMatrix.elements);
 			
 			//cross your fingers and hope it works
+			this.gl.enable(this.gl.DEPTH_TEST);
 			this.gl.drawElements(this.gl.TRIANGLES, target.indices.length, this.gl.UNSIGNED_BYTE, 0);
 		}
 
@@ -116,9 +133,10 @@ quack.renderers.GLRenderer = function(canvas, options) {
 	this._init = function() {
 		this.gl = canvas.getContext("webgl", this.contextOptions);
 		this.gl.clearColor(this.clearColor.x, this.clearColor.y, this.clearColor.z, this.clearColor.w);
+		this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 		this.gl.enable(this.gl.DEPTH_TEST);
-		this.gl.clear(this.gl.COLOR_BUFFER_BIT);
-		this.gl.clear(this.gl.DEPTH_BUFFER_BIT);
+		this.gl.depthFunc(this.gl.LEQUAL);
+		
 		this._program = this.gl.createProgram();
 	}.call(this);
 }; 

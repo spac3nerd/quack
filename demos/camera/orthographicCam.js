@@ -9,7 +9,7 @@ function initDemo() {
 	var scene = new quack.core.scene("scene1");
 	var triangles = [];
 	var camera = new quack.camera.orthographicCamera(-5.0, 5.0, 5.0, -5.0, 20, 0);
-	camera.setPosition(0, 2, 6);
+	camera.setPosition(2, 2, -10);
 	camera.setLookAt(0, 0, -4);
 	camera.update();
 	
