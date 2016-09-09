@@ -5,11 +5,13 @@
 	<script type="text/javascript" src="triangle.js"></script>
 </head>
 <body onload=initDemo()>
-	<div id="container" style="width:500px; height:500px">
+	<div id="container" style="width:500px; height:500px; float:left;">
 		<canvas id="view" width="500" height="500">
 			
 		</canvas>
 	</div>
+	<div id="textArea" style="width:500px; height: 500px; margin-left: 520px;"></div>
+	
 	Enter RGB values for each vertex in range of 0.0 - 1.0<br>
 	<input type="text" placeholder="Vertex 1 Red" id="v1r"/><input type="text" placeholder="Vertex 1 Green" id="v1g"/><input type="text" placeholder="Vertex 1 Blue" id="v1b"/><br>
 	<input type="text" placeholder="Vertex 2 Red" id="v2r"/><input type="text" placeholder="Vertex 2 Green" id="v2g"/><input type="text" placeholder="Vertex 2 Blue" id="v2b"/><br>

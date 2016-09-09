@@ -1,4 +1,5 @@
 function initDemo() {
+	var textArea = document.getElementById("textArea");
 	var canvas = document.getElementById("view");
 	var renderer = new quack.renderers.GLRenderer(canvas, {
 		width: canvas.clientWidth,
@@ -13,6 +14,12 @@ function initDemo() {
 	camera.setLookAt(0, 0, -4);
 	camera.update();
 	
+	updateTextArea = function() {
+		textArea.innerHTML = "Renderer Data:<br>";
+		for (var k in renderer.rendererData) {
+			textArea.innerHTML += k + ": " + renderer.rendererData[k] + "<br>";
+		}
+	};
 	
 	var temp;
 	//3 rows wide
@@ -30,4 +37,5 @@ function initDemo() {
 	}
 	
 	renderer.render(scene, camera);
+	updateTextArea();
 } 

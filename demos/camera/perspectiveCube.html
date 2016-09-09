@@ -5,11 +5,12 @@
 	<script type="text/javascript" src="perspectiveCube.js"></script>
 </head>
 <body onload=initDemo()>
-	<div id="container" style="width:500px; height:500px">
+	<div id="container" style="width:500px; height:500px; float:left;">
 		<canvas id="view" width="500" height="500">
 			
 		</canvas>
 	</div>
+	<div id="textArea" style="width:500px; height: 500px; margin-left: 520px;"></div>
 	Enter the rotation angle per second for each axis<br>
 	<input type="text" placeholder="rotX" id="rotX"/><input type="text" placeholder="rotY" id="rotY"/><input type="text" placeholder="rotZ" id="rotZ"/><br>
 	<input type="button" value="apply" id="apply"/>

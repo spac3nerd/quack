@@ -5,9 +5,12 @@
 	<script type="text/javascript" src="rotatingCube.js"></script>
 </head>
 <body onload=initDemo()>
-	<canvas id="view" width="500" height="500">
-		
-	</canvas>
+	<div id="container" style="width:500px; height:500px; float:left;">
+		<canvas id="view" width="500" height="500">
+			
+		</canvas>
+	</div>
+	<div id="textArea" style="width:500px; height: 500px; margin-left: 520px;"></div>
 	Enter the rotation angle per second for each axis<br>
 	<input type="text" value=0 placeholder="rotX" id="rotX"/><input value=0 type="text" placeholder="rotY" id="rotY"/><input value =0 type="text" placeholder="rotZ" id="rotZ"/><br>
 	<input type="button" value="apply" id="apply"/>

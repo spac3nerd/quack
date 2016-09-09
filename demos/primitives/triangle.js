@@ -1,4 +1,5 @@
 function initDemo() {
+	var textArea = document.getElementById("textArea");
 	var canvas = document.getElementById("view");
 	var renderer = new quack.renderers.GLRenderer(canvas, {
 		width: canvas.clientWidth,
@@ -13,8 +14,16 @@ function initDemo() {
 	camera.setLookAt(0, 0, 0);
 	camera.update();
 	scene.append(triangle);
-
+	
 	renderer.render(scene, camera);
+	
+	updateTextArea = function() {
+		textArea.innerHTML = "Renderer Data:<br>";
+		for (var k in renderer.rendererData) {
+			textArea.innerHTML += k + ": " + renderer.rendererData[k] + "<br>";
+		}
+	};
+	updateTextArea();
 	
 	var v1r = document.getElementById("v1r");
 	var v1g = document.getElementById("v1g");
@@ -56,5 +65,6 @@ function initDemo() {
 			val3r, val3g, val3b
 		]));
 		renderer.render(scene, camera);
+		updateTextArea();
 	};
 } 

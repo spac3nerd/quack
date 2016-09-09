@@ -1,4 +1,5 @@
 function initDemo() {
+	var textArea = document.getElementById("textArea");
 	var canvas = document.getElementById("view");
 	var renderer = new quack.renderers.GLRenderer(canvas, {
 		width: canvas.clientWidth,
@@ -14,9 +15,16 @@ function initDemo() {
 	camera.setLookAt(0, 0, 0);
 	camera.update();
 	scene.append(cubeG);
-
+	
 	renderer.render(scene, camera);
-
+	
+	updateTextArea = function() {
+		textArea.innerHTML = "Renderer Data:<br>";
+		for (var k in renderer.rendererData) {
+			textArea.innerHTML += k + ": " + renderer.rendererData[k] + "<br>";
+		}
+	};
+	updateTextArea();
 
 	var scaleX = document.getElementById("rotX");
 	var scaleY = document.getElementById("rotY");
@@ -45,6 +53,7 @@ function initDemo() {
 		cubeG.setRotateY(valY * delta);
 		cubeG.setRotateZ(valZ * delta);
 		renderer.render(scene, camera);
+		updateTextArea();
 	};
 	
 	render();

@@ -7,7 +7,6 @@ options {
 */
 quack.renderers.GLRenderer = function(canvas, options) {
 	//constructor
-	debugger;
 	this.canvas = canvas;
 	this.id = options.id || "default";
 	this.width = canvas.clientWidth;
@@ -18,6 +17,9 @@ quack.renderers.GLRenderer = function(canvas, options) {
 	this._vertexShader = undefined;
 	this._fragShader = undefined;
 	this._prevRenderData = undefined;
+	this.rendererData = {
+		vertices: 0
+	};
 	
 	
 	//init the context
@@ -57,7 +59,7 @@ quack.renderers.GLRenderer = function(canvas, options) {
 		
 		var a_attr = this.gl.getAttribLocation(this.gl.program, attr);
 		if (a_attr < 0) {
-			console.warn("failed to get location of: " + attr);
+			console.warn("Failed to get location of: " + attr);
 		}
 		this.gl.vertexAttribPointer(a_attr, n, type, false, 0, 0);
 		this.gl.enableVertexAttribArray(a_attr);
@@ -97,6 +99,7 @@ quack.renderers.GLRenderer = function(canvas, options) {
 		//clear buffers
 		this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 		
+		this.rendererData.vertices = 0;
 		var target;
 		
 		//This needs to account for all children at any depth, but this is fine for now
@@ -107,6 +110,8 @@ quack.renderers.GLRenderer = function(canvas, options) {
 			if (!this._prevRenderData) {
 				this._attachShaders(target._renderData);
 			}
+			
+			this.rendererData.vertices += target.vertices.length / 3;
 			
 			var a = this._setArrayBuffer(target.vertices, 3, this.gl.FLOAT, "a_position");
 			var b = this._setArrayBuffer(target.colors, 3, this.gl.FLOAT, "a_color");
@@ -123,11 +128,16 @@ quack.renderers.GLRenderer = function(canvas, options) {
 			this.gl.uniformMatrix4fv(u_modelMatrix, false, target.modelMatrix.elements);
 			
 			//cross your fingers and hope it works
-			this.gl.enable(this.gl.DEPTH_TEST);
 			this.gl.drawElements(this.gl.TRIANGLES, target.indices.length, this.gl.UNSIGNED_BYTE, 0);
 		}
-
 		
+	};
+	
+	this._saveRendererData = function() {
+		this.rendererData.depthBits = this.gl.getParameter(this.gl.DEPTH_BITS);
+		for (var k in this.contextOptions) {
+			this.rendererData[k] = this.contextOptions[k];
+		}
 	};
 	
 	this._init = function() {
@@ -136,6 +146,7 @@ quack.renderers.GLRenderer = function(canvas, options) {
 		this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 		this.gl.enable(this.gl.DEPTH_TEST);
 		this.gl.depthFunc(this.gl.LEQUAL);
+		this._saveRendererData();
 		
 		this._program = this.gl.createProgram();
 	}.call(this);
