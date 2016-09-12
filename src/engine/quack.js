@@ -9,6 +9,9 @@ quack.prototype = {
 		quack.editor = {};
 		quack.ui = {};
 		quack.shaders = {};
+		quack.resources = {
+			models: {}
+		};
 	}(),
 	version: "0.0.1"
 };

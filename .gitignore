@@ -3,4 +3,5 @@ node_modules
 lib
 npm-debug.log
 src/engine/shaders/shaderCollection.js
+resources/models/*
 .directory

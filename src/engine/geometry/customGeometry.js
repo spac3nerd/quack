@@ -1,10 +1,11 @@
-quack.customGeometry = function(position, vertices, colors, indices, normals) {
+quack.customGeometry = function(position, source) {
 	quack.geometry.call(this);
 	this.type = "customGeom";
-	this.vertices = vertices;
-	this.colors = colors;
-	this.indices = indices;
-	this.normals = normals;
+// 	this.vertices = vertices;
+// 	this.colors = colors;
+// 	this.indices = indices;
+// 	this.normals = normals;
+	this.source = source;
 	
 	this._createColors = function() {
 	};

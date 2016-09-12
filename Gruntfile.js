@@ -63,7 +63,8 @@ module.exports = function(grunt) {
 					"src/engine/geometry/customGeometry.js",
 					"src/engine/camera/orthographicCamera.js",
 					"src/engine/camera/perspectiveCamera.js",
-					"src/engine/renderers/GLRenderer.js"
+					"src/engine/renderers/GLRenderer.js",
+					"resources/models/**.js"
 				],
 				dest: "dist/js/readable/quack.js"
 			}
@@ -97,6 +98,17 @@ module.exports = function(grunt) {
 				dest: "src/engine/shaders/shaderCollection.js"
 			}
 			
+		},
+		//TODO: Think of a better way to handle this
+		modelsToJS: {
+			options: {
+				lineSparator: "\n",
+				parentObj: "quack.resources.models" 
+			},
+			dist: {
+				source: "resources/models", //The root directory,
+				dest: "resources/models/models.js"
+			}
 		}
 		/*
 		getFile: {
@@ -120,6 +132,7 @@ module.exports = function(grunt) {
 	grunt.registerTask("build", ["concat", "concatcss", "minjshint", "uglify"]); //"debugger" statements are not allowed
 	grunt.registerTask("debug", ["concat", "concatcss", "jshint"]); //"debugger" statements are allowed in the development build
 	grunt.registerTask("glsl", ["glslToJS"]);
+	grunt.registerTask("importModels", ["modelsToJS"]);
 	
 	
 	
@@ -159,6 +172,76 @@ module.exports = function(grunt) {
 				}
 			});
 		}
+	});
+	/*This task imports JSON object models into quack. It's not a very good way of handling this, but it's good enough for development. 
+	 */
+	
+	grunt.registerTask("modelsToJS", function() {
+		var done = this.async();
+		var dist = grunt.config("modelsToJS").dist;
+		var options = grunt.config("modelsToJS").options;
+		var readline = require("linebyline");
+		var r = [];
+		var containerObj = {};
+		var fs = require("fs");
+		var walk = require("walk");
+		var walker = walk.walk(dist.source);
+		var k = 0;
+		var finalVal = "";
+		
+		walker.on("file", function(rootDir, fileData) {
+			var tokens = fileData.name.split(".");
+			var type = tokens[tokens.length - 1];
+			if (type === "json") {
+				if (k === 0) {
+					//fs.writeFile(dist.dest, options.parentObj + "= {");
+					finalVal += options.parentObj + "= {";
+				}
+				//fs.writeFile(dist.dest, tokens[0] + ": ");
+				finalVal += JSON.stringify(tokens[0]) + ": ";
+				r.push(readline(rootDir + "/" + fileData.name));
+				r[k].index = k;
+				r[k].currentString = "";
+				r[k].on("line", function(line) {
+					
+					setTimeout(function() {
+						console.log(line);
+						r[this.index].currentString += line;
+						//r[this.index].resume();
+					}.bind(this), 100);
+					
+					//r[this.index].currentString += line;
+				});
+				r[k].on("end", function() {
+					finalVal += r[this.index].currentString;
+					if (this.index === k - 1) {
+						fs.writeFile(dist.dest, finalVal + "}");
+					}
+				});
+				k++;
+			}
+			
+		});
+		//console.log("end");
+		/*
+		//for each source file
+		for (var k = 0; k < dist.source.length; k++) {
+			r.push(readline(dist.source[k]));
+			r[k].index = k; //add this prop so that the correct index can be retrieved on the end event
+			r[k].currentString = "";
+			r[k].on("line", function(line) {
+				r[this.index].currentString += line + options.lineSparator;
+				
+			});
+			r[k].on("end", function() {
+				containerObj[dist.objNames[this.index]] = this.currentString;
+				//when the final file is fully read
+				if (this.index === k - 1) {
+					//We must convert our object to JSON
+					fs.writeFile(dist.dest, options.parentObj + "=" + JSON.stringify(containerObj) + ";");
+				}
+			});
+		} */
 	});
 	
 	//A simple custom file downloader - currently not in use
