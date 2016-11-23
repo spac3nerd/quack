@@ -177,6 +177,7 @@ module.exports = function(grunt) {
 	 */
 	
 	grunt.registerTask("modelsToJS", function() {
+		debugger;
 		var done = this.async();
 		var dist = grunt.config("modelsToJS").dist;
 		var options = grunt.config("modelsToJS").options;
@@ -190,6 +191,7 @@ module.exports = function(grunt) {
 		var finalVal = "";
 		
 		walker.on("file", function(rootDir, fileData) {
+			debugger;
 			var tokens = fileData.name.split(".");
 			var type = tokens[tokens.length - 1];
 			if (type === "json") {

@@ -8,12 +8,34 @@ function initDemo() {
 		antialias: true
 	});
 	var scene = new quack.core.scene("scene1");
-	var cubeG = new quack.cubeGeometry();
+	var cubes = [];
+	var numOfCubes = 5;
+	var angle = (360 / numOfCubes) * (Math.PI / 180);
+	var hyp = 5; 
+	//create the cubes and set their position
+	for (var k = 0; k < numOfCubes; k++) {
+		cubes[k] = new quack.cubeGeometry();
+		cubes[k].setPosition(Math.random() * (0 - (-5)) + (-5), 
+		Math.cos(angle * k) * hyp,
+		Math.sin(angle * k) * hyp);
+	}
+	var rotAngles = [];
+	//create a random set of rotation angles per second for each cube
+	for (var k = 0; k < numOfCubes; k++) {
+		rotAngles.push({
+			x: Math.random() * (.78 - (-.78)) + (-.78),
+			y: Math.random() * (.78 - (-.78)) + (-.78),
+			z: Math.random() * (.78 - (-.78)) + (-.78)
+		});
+	}
+	
 	var camera = new quack.camera.perspectiveCamera(canvas.clientWidth / canvas.clientHeight, 75, 20, 1);
-	camera.setPosition(3, 3, 3);
+	camera.setPosition(10, 0, 0);
 	camera.setLookAt(0, 0, 0);
 	camera.update();
-	scene.append(cubeG);
+	for (k = 0; k < numOfCubes; k++) {
+		scene.append(cubes[k]);
+	}
 	
 	renderer.render(scene, camera);
 	
@@ -36,11 +58,6 @@ function initDemo() {
 	var delta;
 	
 	button.onclick = function(e) {
-		valX = Number(scaleX.value), valY = Number(scaleY.value), valZ = Number(scaleZ.value);
-		//convert to radians since that's what matrix4 expects
-		valX *= Math.PI / 180;
-		valY *= Math.PI / 180;
-		valZ *= Math.PI / 180;
 	};
 	
 	function render() {
@@ -48,9 +65,11 @@ function initDemo() {
 		delta = (date2 - date1) / 1000;
 		date1 = date2;
 		requestAnimationFrame(render);
-		cubeG.setRotateX(valX * delta);
-		cubeG.setRotateY(valY * delta);
-		cubeG.setRotateZ(valZ * delta);
+		for (var n = 0; n < numOfCubes; n++) {
+			cubes[n].setRotateX(rotAngles[n].x * delta);
+			cubes[n].setRotateY(rotAngles[n].y * delta);
+			cubes[n].setRotateZ(rotAngles[n].z * delta);
+		}
 		renderer.render(scene, camera);
 		updateTextArea();
 	};
