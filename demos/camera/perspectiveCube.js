@@ -15,7 +15,7 @@ function initDemo() {
 	//create the cubes and set their position
 	for (var k = 0; k < numOfCubes; k++) {
 		cubes[k] = new quack.cubeGeometry();
-		cubes[k].setPosition(Math.random() * (0 - (-5)) + (-5), 
+		cubes[k].setPosition(Math.random() * (0 - (-10)) + (-10), 
 		Math.cos(angle * k) * hyp,
 		Math.sin(angle * k) * hyp);
 	}
@@ -47,18 +47,8 @@ function initDemo() {
 	};
 	updateTextArea();
 
-	var scaleX = document.getElementById("rotX");
-	var scaleY = document.getElementById("rotY");
-	var scaleZ = document.getElementById("rotZ");
-	var button = document.getElementById("apply");
-	var valX = Number(scaleX.value) * Math.PI / 180, 
-		valY = Number(scaleY.value) * Math.PI / 180, 
-		valZ = Number(scaleZ.value) * Math.PI / 180;
 	var date1 = new Date(), date2 = new Date();
 	var delta;
-	
-	button.onclick = function(e) {
-	};
 	
 	function render() {
 		date2 = new Date();
