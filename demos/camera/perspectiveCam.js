@@ -26,6 +26,7 @@ function initDemo() {
 	for (var k = 0; k < 3; k++) {
 		//5 cols deep
 		for (var n = 0; n < 5; n++) {
+			debugger;
 			temp = new quack.triangleGeometry();
 			
 			temp.setPosition(3 * (k - 1), 0, -(2 * n));

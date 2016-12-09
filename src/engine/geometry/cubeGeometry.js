@@ -16,11 +16,36 @@ quack.cubeGeometry = function(position, width, height, depth) {
 		this.modelMatrix.setTranslate(this.position.x, this.position.y, this.position.z);
 	}
 	
-	//calcualte the number of vertices and set the vertices array
+	//calculate the number of vertices and set the vertices array
 	//TODO: Eventually, cube geometry can take the number of triangles per side as an argument,
 	//	at which point this function becomes more useful
-	this._numberOfVertices = function() {
-		return 0;
+	this.getNumVertices = function() {
+		return 24;
+	};
+	
+	this.getNumFaces = function() {
+		return 6;
+	};
+	
+	//colors - a 2D array of length <= 6
+	//each element in colors represents a face, and leaving it empty will not change current color
+	this.setPerFaceColors = function(colors) {
+		for (var k = 0; k < Math.min(colors.length, 6); k++) {
+			//only apply a color if it has been defined for the current face
+			if (colors[k].length >= 1) {
+				var c = k * 12; //the current face as mapped in the colors array
+				//for all elements in the current face
+				for (var n = 0; n < 12; n+= 3) {
+					this.colors[c + n] = colors[k][0];
+					this.colors[c + n + 1] = colors[k][1];
+					this.colors[c + n + 2] = colors[k][2];
+				}
+				
+				
+			}
+		}
+		
+		return this;
 	};
 	
 	this._createCube = function() {
@@ -49,6 +74,8 @@ quack.cubeGeometry = function(position, width, height, depth) {
 			20,21,22,  20,22,23
 		]);
 	};
+	
+	
 	
 	
 	this.update = function() {

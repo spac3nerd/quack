@@ -60,6 +60,7 @@ module.exports = function(grunt) {
 					"src/engine/geometry/geometry.js",
 					"src/engine/geometry/cubeGeometry.js",
 					"src/engine/geometry/triangleGeometry.js",
+					"src/engine/geometry/sphereGeometry.js",
 					"src/engine/geometry/customGeometry.js",
 					"src/engine/camera/orthographicCamera.js",
 					"src/engine/camera/perspectiveCamera.js",
