@@ -18,7 +18,8 @@ quack.renderers.GLRenderer = function(canvas, options) {
 	this._fragShader = undefined;
 	this._prevRenderData = undefined;
 	this.rendererData = {
-		vertices: 0
+		vertices: 0,
+		faces: 0
 	};
 	
 	
@@ -68,8 +69,8 @@ quack.renderers.GLRenderer = function(canvas, options) {
 	};
 	
 	this._attachShaders = function(data) {
-		this._vertexShader = this._loadShader(this.gl.VERTEX_SHADER, data.shaders.vertex);
-		this._fragShader = this._loadShader(this.gl.FRAGMENT_SHADER, data.shaders.frag);
+		this._vertexShader = this._loadShader(this.gl.VERTEX_SHADER, data.vertex);
+		this._fragShader = this._loadShader(this.gl.FRAGMENT_SHADER, data.frag);
 		
 		this.gl.attachShader(this._program, this._vertexShader);
 		this.gl.attachShader(this._program, this._fragShader);
@@ -100,7 +101,8 @@ quack.renderers.GLRenderer = function(canvas, options) {
 		this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 		
 		this.rendererData.vertices = 0;
-		var target, vertices;
+		this.rendererData.faces = 0;
+		var target, vertices, faces;
 		
 		//This needs to account for all children at any depth, but this is fine for now
 		for (var k = 0, n = scene.children.length; k < n; k++) {
@@ -108,10 +110,11 @@ quack.renderers.GLRenderer = function(canvas, options) {
 			
 			//If no rendering data was set
 			if (!this._prevRenderData) {
-				this._attachShaders(target._renderData);
+				this._attachShaders(target.material.shaders);
 			}
 			
 			this.rendererData.vertices += target.vertices.length / 3;
+			this.rendererData.faces += target.faces.length;
 			
 			//check if the vertices are in a typed array, if not make it
 			if (!(target.vertices instanceof Float32Array)) {
@@ -124,7 +127,7 @@ quack.renderers.GLRenderer = function(canvas, options) {
 			var a, b, c, d, u_projMatrix, u_viewMatrix, u_modelMatrix, u_normalMatrix, u_lightColor, u_lightPosition, u_ambientLight;
 			
 			//Major Hack! - Must be changed
-			if (target._renderData.shaders.vertex !== quack.shaders.pointLightVVertex) {
+			//if (target._renderData.shaders.vertex !== quack.shaders.pointLightVVertex) {
 				
 				a = this._setArrayBuffer(vertices, 3, this.gl.FLOAT, "a_position");
 				b = this._setArrayBuffer(target.colors, 3, this.gl.FLOAT, "a_color");
@@ -134,7 +137,8 @@ quack.renderers.GLRenderer = function(canvas, options) {
 				u_projMatrix = this.gl.getUniformLocation(this.gl.program, 'u_projMatrix');
 				u_viewMatrix = this.gl.getUniformLocation(this.gl.program, 'u_viewMatrix');
 				u_modelMatrix = this.gl.getUniformLocation(this.gl.program, 'u_modelMatrix');
-			}
+			//}
+			/*
 			else {
 				a = this._setArrayBuffer(vertices, 3, this.gl.FLOAT, "a_position");
 				b = this._setArrayBuffer(target.colors, 3, this.gl.FLOAT, "a_color");
@@ -164,7 +168,7 @@ quack.renderers.GLRenderer = function(canvas, options) {
 				
 				this.gl.uniformMatrix4fv(u_normalMatrix, false, normalMatrix.elements);
 			}
-			
+			*/
 			
 			//pass the matrices to the shader
 			this.gl.uniformMatrix4fv(u_projMatrix, false, camera.projectionMatrix.elements);

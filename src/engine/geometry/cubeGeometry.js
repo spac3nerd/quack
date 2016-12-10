@@ -1,9 +1,10 @@
-quack.cubeGeometry = function(position, width, height, depth) {
+quack.cubeGeometry = function(position, width, height, depth, material) {
 	quack.geometry.call(this);
 	this.type = "cubeGeom";
 	this.width = width || 1; //x-direction
 	this.height = height || 1; //y-direction
 	this.depth = depth || 1; //z-direction
+	this.material = material ? material : "flatMaterial";
 	this.vertices = undefined;
 	this.colors = undefined;
 	this.indices = undefined;
@@ -15,6 +16,9 @@ quack.cubeGeometry = function(position, width, height, depth) {
 		this.position = position;
 		this.modelMatrix.setTranslate(this.position.x, this.position.y, this.position.z);
 	}
+	this._setMaterial(this.material);
+	
+	
 	
 	//calculate the number of vertices and set the vertices array
 	//TODO: Eventually, cube geometry can take the number of triangles per side as an argument,

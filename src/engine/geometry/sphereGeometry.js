@@ -1,10 +1,11 @@
 //This geometry is generated based on an icosahedron. Higher levels of refinement yield a smoother icosphere
 
-quack.sphereGeometry = function(position, radius, refinement) {
+quack.sphereGeometry = function(position, radius, refinement, material) {
 	quack.geometry.call(this);
 	this.type = "sphereGeom";
 	this.radius = radius | 1;
 	this.refinement = refinement | 0;
+	this.material = material ? material : "flatMaterial";
 	this.vertices = undefined;
 	this.colors = undefined;
 	this.indices = undefined;
@@ -18,6 +19,9 @@ quack.sphereGeometry = function(position, radius, refinement) {
 		this.position = position;
 		this.modelMatrix.setTranslate(this.position.x, this.position.y, this.position.z);
 	}
+	this._setMaterial(this.material);
+	
+	
 	
 	this.getNumVertices = function() {
 		return this.vertices.length / 3;
@@ -248,8 +252,5 @@ quack.sphereGeometry = function(position, radius, refinement) {
 		else {
 			this.update();
 		}
-		//TODO: This should not be hardcoded once different material types are added
-		this._renderData.shaders.vertex = quack.shaders.flatVertex;
-		this._renderData.shaders.frag = quack.shaders.flatFrag;
 	}.call(this);
 };

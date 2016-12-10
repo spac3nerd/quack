@@ -1,8 +1,11 @@
-quack.triangleGeometry = function(position, width, height) {
+quack.triangleGeometry = function(position, width, height, material) {
 	quack.geometry.call(this);
 	this.type = "triangleGeom";
 	this.width = width || 1;
 	this.height = height || 1;
+	this.material = material ? material : "flatMaterial";
+	
+	this._setMaterial(this.material);
 	
 	this._createColors = function() {
 		//If per-vertex colors are not specified, make each vertex the solidColor

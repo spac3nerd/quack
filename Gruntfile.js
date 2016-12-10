@@ -51,21 +51,30 @@ module.exports = function(grunt) {
 				src: [
 					"src/engine/quack.js",
 					"src/engine/shaders/shaderCollection.js",
+					//math
 					"src/engine/math/Vector3.js",
 					"src/engine/math/Vector4.js",
 					"src/engine/math/Matrix3.js",
 					"src/engine/math/Matrix4.js",
+					//core
 					"src/engine/core/genericObj.js",
 					"src/engine/core/scene.js",
 					"src/engine/core/face.js",
+					//materials
+					"src/engine/materials/flatMaterial.js",
+					"src/engine/materials/phongMaterial.js",
+					//geometry
 					"src/engine/geometry/geometry.js",
 					"src/engine/geometry/cubeGeometry.js",
 					"src/engine/geometry/triangleGeometry.js",
 					"src/engine/geometry/sphereGeometry.js",
 					"src/engine/geometry/customGeometry.js",
+					//camera
 					"src/engine/camera/orthographicCamera.js",
 					"src/engine/camera/perspectiveCamera.js",
+					//renderer
 					"src/engine/renderers/GLRenderer.js",
+					//models
 					"resources/models/**.js"
 				],
 				dest: "dist/js/readable/quack.js"
