@@ -10,15 +10,20 @@ function initDemo() {
 	var scene = new quack.core.scene("scene1");
 	
 	var spheres = [];
-	spheres.push(new quack.sphereGeometry(new quack.math.vector3(-1, 0, 0), 1, 0));
-	spheres.push(new quack.sphereGeometry(new quack.math.vector3(1, 0, 0), 1, 1));
+	spheres.push(new quack.sphereGeometry(new quack.math.vector3(-1.2, 1, 0), 1, 0));
+	spheres.push(new quack.sphereGeometry(new quack.math.vector3(1.2, 1, 0), 1, 1));
+	spheres.push(new quack.sphereGeometry(new quack.math.vector3(-1.2, -1, 0), 1, 2));
+	spheres.push(new quack.sphereGeometry(new quack.math.vector3(1.2, -1, 0), 1, 3));
 	
-	var camera = new quack.camera.perspectiveCamera(canvas.clientWidth / canvas.clientHeight, 75, 20, 1);
-	camera.setPosition(0, 0, 3);
+	//var camera = new quack.camera.perspectiveCamera(canvas.clientWidth / canvas.clientHeight, 75, 20, 1);
+	var camera = new quack.camera.orthographicCamera(-2.5, 2.5, 2.5, -2.5, 20, 1);
+	camera.setPosition(0, 0, 3.5);
 	camera.setLookAt(0, 0, 0);
 	camera.update();
 	scene.append(spheres[0]);
 	scene.append(spheres[1]);
+	scene.append(spheres[2]);
+	scene.append(spheres[3]);
 	
 	//set a custom color based on each vertex's y coordinate
 	var setColors = function(data) {
@@ -39,6 +44,8 @@ function initDemo() {
 	};
 	spheres[0].setCustomColors(setColors);
 	spheres[1].setCustomColors(setColors);
+	spheres[2].setCustomColors(setColors);
+	spheres[3].setCustomColors(setColors);
 	
 	//Things needed by rotation input
 	var scaleX = document.getElementById("rotX");
@@ -82,6 +89,14 @@ function initDemo() {
 		spheres[1].setRotateX(valX * delta);
 		spheres[1].setRotateY(valY * delta);
 		spheres[1].setRotateZ(valZ * delta);
+		
+		spheres[2].setRotateX(valX * delta);
+		spheres[2].setRotateY(valY * delta);
+		spheres[2].setRotateZ(valZ * delta);
+		
+		spheres[3].setRotateX(valX * delta);
+		spheres[3].setRotateY(valY * delta);
+		spheres[3].setRotateZ(valZ * delta);
 		
 		renderer.render(scene, camera);
 		updateTextArea();

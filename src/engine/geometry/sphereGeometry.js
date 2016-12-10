@@ -9,6 +9,7 @@ quack.sphereGeometry = function(position, radius, refinement) {
 	this.colors = undefined;
 	this.indices = undefined;
 	this.index = 0;
+	this.midPointCache = {};
 	
 	if ( (position === undefined) || (!(position instanceof quack.math.vector3)) ) {
 		this.position = new quack.math.vector3(0, 0, 0);
@@ -19,7 +20,7 @@ quack.sphereGeometry = function(position, radius, refinement) {
 	}
 	
 	this.getNumVertices = function() {
-		return 12;
+		return this.vertices.length / 3;
 	};
 	
 	/*callback - is called for every vertex and it passes the current vertex and its current color
@@ -85,7 +86,7 @@ quack.sphereGeometry = function(position, radius, refinement) {
 			-b, 0.0, -a,
 			-b, 0.0, a
 		);
-		this.index = this.vertices.length;
+		this.index = (this.vertices.length / 3);
 		
 		this.colors = new Float32Array([
 			color.x, color.y, color.z,
@@ -167,11 +168,23 @@ quack.sphereGeometry = function(position, radius, refinement) {
 	};
 	
 	this._refineIcosphere = function() {
-		console.log(this.vertices.length);
 		var that = this, newVertices = [];
 		
 		//split midway along a side
 		function split(v1, v2) {
+			
+			var v1Smaller = false;
+			if (v1 < v2) {
+				v1Smaller = true;
+			}
+			var smallerIndex = v1Smaller ? v1 : v2;
+			var largerIndex = v1Smaller ? v2 : v1;
+			var key = (smallerIndex << 16) + largerIndex;
+			//debugger;
+			if (that.midPointCache[key]) {
+				return that.midPointCache[key];
+			}
+			
 			v1 *= 3;
 			v2 *= 3;
 			//redefine v1, v2 to be the actual vertices
@@ -187,6 +200,7 @@ quack.sphereGeometry = function(position, radius, refinement) {
 			//normalize to keep everything on the unit sphere
 			mid.setNormal();
 			that.vertices.push(mid.x, mid.y, mid.z);
+			that.midPointCache[key] = that.index;
 			
 			return that.index++;
 		}
@@ -213,8 +227,7 @@ quack.sphereGeometry = function(position, radius, refinement) {
 				newFaces.push(new quack.core.face(p1, p2, p3));
 			}
 			this.faces = newFaces;
-			
-			console.log(this.vertices.length);
+
 		}
 		
 		this.update();
@@ -223,11 +236,11 @@ quack.sphereGeometry = function(position, radius, refinement) {
 	this.update = function() {
 		this._createIndices();
 		this._updateColors();
-		debugger;
 	};
 	
 	this._init = function() {
 		this._createIcosahedron();
+		
 		if (this.refinement > 0) {
 			this._refineIcosphere();
 		}
