@@ -19,8 +19,6 @@ quack.sphereGeometry = function(position, radius, refinement, material) {
 		this.position = position;
 		this.modelMatrix.setTranslate(this.position.x, this.position.y, this.position.z);
 	}
-	this._setMaterial(this.material);
-	
 	
 	
 	this.getNumVertices = function() {
@@ -237,6 +235,7 @@ quack.sphereGeometry = function(position, radius, refinement, material) {
 		this._createIndices();
 		this._updateColors();
 		this._updateNormals();
+		this.vertices = new Float32Array(this.vertices);
 		console.log("-----");
 		console.log(this.getNumVertices());
 		console.log(this.indices.length);
@@ -252,5 +251,6 @@ quack.sphereGeometry = function(position, radius, refinement, material) {
 		else {
 			this.update();
 		}
+		this._setMaterial(this.material, this);
 	}.call(this);
 };

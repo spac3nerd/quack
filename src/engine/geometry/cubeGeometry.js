@@ -16,8 +16,6 @@ quack.cubeGeometry = function(position, width, height, depth, material) {
 		this.position = position;
 		this.modelMatrix.setTranslate(this.position.x, this.position.y, this.position.z);
 	}
-	this._setMaterial(this.material);
-	
 	
 	
 	//calculate the number of vertices and set the vertices array
@@ -87,8 +85,7 @@ quack.cubeGeometry = function(position, width, height, depth, material) {
 	};
 	this._init = function() {
 		this._createCube();
-		//TODO: This should not be hardcoded once different material types are added
-		this._renderData.shaders.vertex = quack.shaders.flatVertex;
-		this._renderData.shaders.frag = quack.shaders.flatFrag;
+		
+		this._setMaterial(this.material, this);
 	}.call(this);
 }; 

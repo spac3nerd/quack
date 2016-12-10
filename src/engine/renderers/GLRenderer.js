@@ -116,67 +116,62 @@ quack.renderers.GLRenderer = function(canvas, options) {
 			this.rendererData.vertices += target.vertices.length / 3;
 			this.rendererData.faces += target.faces.length;
 			
-			//check if the vertices are in a typed array, if not make it
-			if (!(target.vertices instanceof Float32Array)) {
-				vertices = new Float32Array(target.vertices);
-			}
-			else {
-				vertices = target.vertices;
-			}
+			var arrayBuffers = [], elemArrayBuffers = [], uniforms = [], t, tokens, r, val;
 			
-			var a, b, c, d, u_projMatrix, u_viewMatrix, u_modelMatrix, u_normalMatrix, u_lightColor, u_lightPosition, u_ambientLight;
-			
-			//Major Hack! - Must be changed
-			//if (target._renderData.shaders.vertex !== quack.shaders.pointLightVVertex) {
+			//Read the material mappings and apply them
+			for (var q in target.material.mappings) {
 				
-				a = this._setArrayBuffer(vertices, 3, this.gl.FLOAT, "a_position");
-				b = this._setArrayBuffer(target.colors, 3, this.gl.FLOAT, "a_color");
-				c = this._setElementArrayBuffer(target.indices);
+				//used to get values when multiple levels are involved
+				var getMultProps = function(obj, props) {
+					for (var o = 1; o < props.length; o++) {
+						obj = obj[props[o]];
+					}
+					return obj;
+				};
 				
-				//get location of matrices
-				u_projMatrix = this.gl.getUniformLocation(this.gl.program, 'u_projMatrix');
-				u_viewMatrix = this.gl.getUniformLocation(this.gl.program, 'u_viewMatrix');
-				u_modelMatrix = this.gl.getUniformLocation(this.gl.program, 'u_modelMatrix');
-			//}
-			/*
-			else {
-				a = this._setArrayBuffer(vertices, 3, this.gl.FLOAT, "a_position");
-				b = this._setArrayBuffer(target.colors, 3, this.gl.FLOAT, "a_color");
-				d = this._setArrayBuffer(vertices, 3, this.gl.FLOAT, "a_normal");
-				c = this._setElementArrayBuffer(target.indices);
-				
-				//get location of matrices
-				u_projMatrix = this.gl.getUniformLocation(this.gl.program, 'u_projMatrix');
-				u_viewMatrix = this.gl.getUniformLocation(this.gl.program, 'u_viewMatrix');
-				u_modelMatrix = this.gl.getUniformLocation(this.gl.program, 'u_modelMatrix');
-				
-				u_normalMatrix = this.gl.getUniformLocation(this.gl.program, 'u_normalMatrix');
-				u_lightColor = this.gl.getUniformLocation(this.gl.program, 'u_lightColor');
-				u_lightPosition = this.gl.getUniformLocation(this.gl.program, 'u_lightPosition');
-				u_ambientLight = this.gl.getUniformLocation(this.gl.program, 'u_ambientLight');
-				
-				var normalMatrix = new quack.math.matrix4().setFromMatrix(target.modelMatrix);
-				
-				//Pass some test values for now
-				
-				// Set the light color (white)
-				this.gl.uniform3f(u_lightColor, 1.0, 1.0, 1.0);
-				// Set the light direction (in the world coordinate)
-				this.gl.uniform3f(u_lightPosition, 10, 4, 8);
-				// Set the ambient light
-				this.gl.uniform3f(u_ambientLight, 0.2, 0.2, 0.2);
-				
-				this.gl.uniformMatrix4fv(u_normalMatrix, false, normalMatrix.elements);
+				if (q === "arrayBuffer") {
+					for (r in target.material.mappings[q]) {
+						t = target.material.mappings[q][r];
+						tokens = t[0].split(".");
+						if (tokens[0] === "geometry") {
+							val = getMultProps(target, tokens);
+							arrayBuffers.push(this._setArrayBuffer(val, t[1], this.gl[t[2]], r));
+						}
+					}
+				}
+				else if (q === "elementArrayBuffer") {
+					t = target.material.mappings[q];
+					for (r = 0; r < t.length; r++) {
+						tokens = t[r].split(".");
+						if (tokens[0] === "geometry") {
+							val = getMultProps(target, tokens);
+							elemArrayBuffers.push(this._setElementArrayBuffer(val));
+						}
+					}
+				}
+				else if (q === "uniform") {
+					for (r in target.material.mappings[q]) {
+						t = target.material.mappings[q][r];
+						
+						//get the location of the uniform
+						uniforms.push(this.gl.getUniformLocation(this.gl.program, r));
+						
+						
+						//pass the correct data to the uniform
+						tokens = t.split(".");
+						if (tokens[0] === "geometry") {
+							val = getMultProps(target, tokens);
+							this.gl.uniformMatrix4fv(uniforms[uniforms.length - 1], false, val);
+						}
+						else if (tokens[0] === "camera") {
+							val = getMultProps(camera, tokens);
+							this.gl.uniformMatrix4fv(uniforms[uniforms.length - 1], false, val);
+						}
+					}
+				}
 			}
-			*/
-			
-			//pass the matrices to the shader
-			this.gl.uniformMatrix4fv(u_projMatrix, false, camera.projectionMatrix.elements);
-			this.gl.uniformMatrix4fv(u_viewMatrix, false, camera.viewMatrix.elements);
-			this.gl.uniformMatrix4fv(u_modelMatrix, false, target.modelMatrix.elements);
 			
 			//cross your fingers and hope it works
-			//debugger;
 			this.gl.drawElements(this.gl.TRIANGLES, target.indices.length, this.gl.UNSIGNED_BYTE, 0);
 		}
 		

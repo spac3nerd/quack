@@ -78,8 +78,8 @@ quack.geometry = function() {
 		this.faces.push(new quack.core.face(x, y, z));
 	};
 	
-	this._setMaterial = function(material) {
-		this.material = new quack.material[material]();
+	this._setMaterial = function(material, owner) {
+		this.material = new quack.material[material](owner);
 	};
 	
 }; 

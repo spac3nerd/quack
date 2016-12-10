@@ -5,7 +5,7 @@ quack.triangleGeometry = function(position, width, height, material) {
 	this.height = height || 1;
 	this.material = material ? material : "flatMaterial";
 	
-	this._setMaterial(this.material);
+	
 	
 	this._createColors = function() {
 		//If per-vertex colors are not specified, make each vertex the solidColor
@@ -35,8 +35,7 @@ quack.triangleGeometry = function(position, width, height, material) {
 	this._init = function() {
 		this._createTriangle();
 		this._createColors();
-		//TODO: This should not be hardcoded once different material types are added
-		this._renderData.shaders.vertex = quack.shaders.flatVertex;
-		this._renderData.shaders.frag = quack.shaders.flatFrag;
+		
+		this._setMaterial(this.material, this);
 	}.call(this);
 };
