@@ -53,6 +53,31 @@ quack.sphereGeometry = function(position, radius, refinement) {
 		}
 	};
 	
+	//TODO: Think about moving this to geometry
+	//Calculate the normal vector for each face
+	this._updateNormals = function() {
+		
+		this.normals = new Float32Array(this.faces.length * 3);
+		
+		for (var k = 0, n = this.faces.length; k < n; k++) {
+			//get the three vertices that make up the face
+			var p1 = new quack.math.vector3(this.vertices[(this.faces[k].v1 * 3)], this.vertices[(this.faces[k].v1 * 3) + 1], this.vertices[(this.faces[k].v1 * 3) + 2]);
+			var p2 = new quack.math.vector3(this.vertices[(this.faces[k].v2 * 3)], this.vertices[(this.faces[k].v2 * 3) + 1], this.vertices[(this.faces[k].v2 * 3) + 2]);
+			var p3 = new quack.math.vector3(this.vertices[(this.faces[k].v3 * 3)], this.vertices[(this.faces[k].v3 * 3) + 1], this.vertices[(this.faces[k].v3 * 3) + 2]);
+			
+			var A = new quack.math.vector3().subVectors(p2, p1);
+			var B = new quack.math.vector3().subVectors(p3, p1);
+			
+			var normal = new quack.math.vector3().crossVectors(A, B).setNormal();
+			//save the normal vector to the face object
+			this.faces[k].setNormal(normal);
+			//save the normal vector to something the renderer can use
+			this.normals[(k * 3)] = normal.x;
+			this.normals[(k * 3) + 1] = normal.y;
+			this.normals[(k * 3) + 2] = normal.z;
+		}
+	};
+	
 	this._updateColors = function() {
 		this.colors = new Float32Array(this.faces.length * 3);
 		var color = this.solidColor;
@@ -61,6 +86,11 @@ quack.sphereGeometry = function(position, radius, refinement) {
 			this.colors[k + 1] = color.y;
 			this.colors[k + 2] = color.z;
 		}
+	};
+	
+	this.setSolidColor = function(color) {
+		this.solidColor = color;
+		this._updateColors();
 	};
 	
 	//This creates an unrefined icosahedron along the unit sphere - refinement will be applied after its creation
@@ -131,40 +161,6 @@ quack.sphereGeometry = function(position, radius, refinement) {
 		
 		this._createIndices();
 		
-		/*
-		this.indices = new Uint8Array([
-			0, 11, 5,
-			0, 5, 1,
-			0, 1, 7,
-			0, 7, 10,
-			0, 10, 11,
-			
-			1, 5, 9,
-			5, 11, 4,
-			11, 10, 2,
-			10, 7, 6,
-			7, 1, 8,
-			
-			3, 9, 4,
-			3, 4, 2,
-			3, 2, 6,
-			3, 6, 8,
-			3, 8, 9,
-			
-			4, 9, 5,
-			2, 4, 11,
-			6, 2, 10,
-			8, 6, 7,
-			9, 8, 1
-		]);
-		*/
-		//Build the faces
-		/*
-		for (var k = 0, n = this.indices.length; k < n; k += 3) {
-			debugger;
-			this.addFace(this.vertices[this.indices[k]], this.vertices[this.indices[k + 1]], this.vertices[this.indices[k + 2]]);
-		} */
-		
 	};
 	
 	this._refineIcosphere = function() {
@@ -180,7 +176,7 @@ quack.sphereGeometry = function(position, radius, refinement) {
 			var smallerIndex = v1Smaller ? v1 : v2;
 			var largerIndex = v1Smaller ? v2 : v1;
 			var key = (smallerIndex << 16) + largerIndex;
-			//debugger;
+			//console.log(smallerIndex + "\t" + largerIndex);
 			if (that.midPointCache[key]) {
 				return that.midPointCache[key];
 			}
@@ -227,7 +223,7 @@ quack.sphereGeometry = function(position, radius, refinement) {
 				newFaces.push(new quack.core.face(p1, p2, p3));
 			}
 			this.faces = newFaces;
-
+			
 		}
 		
 		this.update();
@@ -236,6 +232,11 @@ quack.sphereGeometry = function(position, radius, refinement) {
 	this.update = function() {
 		this._createIndices();
 		this._updateColors();
+		this._updateNormals();
+		console.log("-----");
+		console.log(this.getNumVertices());
+		console.log(this.indices.length);
+		console.log(this.faces.length);
 	};
 	
 	this._init = function() {
@@ -243,6 +244,9 @@ quack.sphereGeometry = function(position, radius, refinement) {
 		
 		if (this.refinement > 0) {
 			this._refineIcosphere();
+		}
+		else {
+			this.update();
 		}
 		//TODO: This should not be hardcoded once different material types are added
 		this._renderData.shaders.vertex = quack.shaders.flatVertex;

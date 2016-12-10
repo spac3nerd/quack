@@ -121,14 +121,50 @@ quack.renderers.GLRenderer = function(canvas, options) {
 				vertices = target.vertices;
 			}
 			
-			var a = this._setArrayBuffer(vertices, 3, this.gl.FLOAT, "a_position");
-			var b = this._setArrayBuffer(target.colors, 3, this.gl.FLOAT, "a_color");
-			var c = this._setElementArrayBuffer(target.indices);
+			var a, b, c, d, u_projMatrix, u_viewMatrix, u_modelMatrix, u_normalMatrix, u_lightColor, u_lightPosition, u_ambientLight;
 			
-			//get location of matrices
-			var u_projMatrix = this.gl.getUniformLocation(this.gl.program, 'u_projMatrix');
-			var u_viewMatrix = this.gl.getUniformLocation(this.gl.program, 'u_viewMatrix');
-			var u_modelMatrix = this.gl.getUniformLocation(this.gl.program, 'u_modelMatrix');
+			//Major Hack! - Must be changed
+			if (target._renderData.shaders.vertex !== quack.shaders.pointLightVVertex) {
+				
+				a = this._setArrayBuffer(vertices, 3, this.gl.FLOAT, "a_position");
+				b = this._setArrayBuffer(target.colors, 3, this.gl.FLOAT, "a_color");
+				c = this._setElementArrayBuffer(target.indices);
+				
+				//get location of matrices
+				u_projMatrix = this.gl.getUniformLocation(this.gl.program, 'u_projMatrix');
+				u_viewMatrix = this.gl.getUniformLocation(this.gl.program, 'u_viewMatrix');
+				u_modelMatrix = this.gl.getUniformLocation(this.gl.program, 'u_modelMatrix');
+			}
+			else {
+				a = this._setArrayBuffer(vertices, 3, this.gl.FLOAT, "a_position");
+				b = this._setArrayBuffer(target.colors, 3, this.gl.FLOAT, "a_color");
+				d = this._setArrayBuffer(vertices, 3, this.gl.FLOAT, "a_normal");
+				c = this._setElementArrayBuffer(target.indices);
+				
+				//get location of matrices
+				u_projMatrix = this.gl.getUniformLocation(this.gl.program, 'u_projMatrix');
+				u_viewMatrix = this.gl.getUniformLocation(this.gl.program, 'u_viewMatrix');
+				u_modelMatrix = this.gl.getUniformLocation(this.gl.program, 'u_modelMatrix');
+				
+				u_normalMatrix = this.gl.getUniformLocation(this.gl.program, 'u_normalMatrix');
+				u_lightColor = this.gl.getUniformLocation(this.gl.program, 'u_lightColor');
+				u_lightPosition = this.gl.getUniformLocation(this.gl.program, 'u_lightPosition');
+				u_ambientLight = this.gl.getUniformLocation(this.gl.program, 'u_ambientLight');
+				
+				var normalMatrix = new quack.math.matrix4().setFromMatrix(target.modelMatrix);
+				
+				//Pass some test values for now
+				
+				// Set the light color (white)
+				this.gl.uniform3f(u_lightColor, 1.0, 1.0, 1.0);
+				// Set the light direction (in the world coordinate)
+				this.gl.uniform3f(u_lightPosition, 10, 4, 8);
+				// Set the ambient light
+				this.gl.uniform3f(u_ambientLight, 0.2, 0.2, 0.2);
+				
+				this.gl.uniformMatrix4fv(u_normalMatrix, false, normalMatrix.elements);
+			}
+			
 			
 			//pass the matrices to the shader
 			this.gl.uniformMatrix4fv(u_projMatrix, false, camera.projectionMatrix.elements);

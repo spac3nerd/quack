@@ -26,6 +26,15 @@ quack.math.matrix4 = function() {
 		return this;
 	};
 	
+	//set this matrix's elements equal to m's
+	//m - matrix4
+	this.setFromMatrix = function(m) {
+		var e = m.elements;
+		this.set(e[0], e[4], e[8], e[12], e[1], e[5], e[9], e[13], e[2], e[6], e[10], e[14], e[3], e[7], e[11], e[15]);
+		
+		return this;
+	};
+	
 	
 	//Don't feel like writing this one yet
 	this.determinant = function() {

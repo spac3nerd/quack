@@ -57,6 +57,7 @@ quack.math.vector3 = function(x, y ,z) {
 		return this;
 	};
 	
+	//Sub vector b from a and set this vector as the result
 	this.subVectors = function(a, b) {
 		this.x = a.x - b.x;
 		this.y = a.y - b.y;

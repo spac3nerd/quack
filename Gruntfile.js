@@ -90,12 +90,14 @@ module.exports = function(grunt) {
 			dist: {
 				source: [
 					"src/engine/shaders/flatVertex.glsl",
-					"src/engine/shaders/flatFrag.glsl"
+					"src/engine/shaders/flatFrag.glsl",
+					"src/engine/shaders/pointLightVVertex.glsl"
 				],
 				//these property names match up to the files listed above
 				objNames: [
 					"flatVertex",
-					"flatFrag"
+					"flatFrag",
+					"pointLightVVertex"
 				],
 				dest: "src/engine/shaders/shaderCollection.js"
 			}
