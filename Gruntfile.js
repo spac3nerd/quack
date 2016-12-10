@@ -57,6 +57,7 @@ module.exports = function(grunt) {
 					"src/engine/math/Matrix4.js",
 					"src/engine/core/genericObj.js",
 					"src/engine/core/scene.js",
+					"src/engine/core/face.js",
 					"src/engine/geometry/geometry.js",
 					"src/engine/geometry/cubeGeometry.js",
 					"src/engine/geometry/triangleGeometry.js",

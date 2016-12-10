@@ -100,7 +100,7 @@ quack.renderers.GLRenderer = function(canvas, options) {
 		this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 		
 		this.rendererData.vertices = 0;
-		var target;
+		var target, vertices;
 		
 		//This needs to account for all children at any depth, but this is fine for now
 		for (var k = 0, n = scene.children.length; k < n; k++) {
@@ -113,7 +113,15 @@ quack.renderers.GLRenderer = function(canvas, options) {
 			
 			this.rendererData.vertices += target.vertices.length / 3;
 			
-			var a = this._setArrayBuffer(target.vertices, 3, this.gl.FLOAT, "a_position");
+			//check if the vertices are in a typed array, if not make it
+			if (!(target.vertices instanceof Float32Array)) {
+				vertices = new Float32Array(target.vertices);
+			}
+			else {
+				vertices = target.vertices;
+			}
+			
+			var a = this._setArrayBuffer(vertices, 3, this.gl.FLOAT, "a_position");
 			var b = this._setArrayBuffer(target.colors, 3, this.gl.FLOAT, "a_color");
 			var c = this._setElementArrayBuffer(target.indices);
 			
@@ -128,6 +136,7 @@ quack.renderers.GLRenderer = function(canvas, options) {
 			this.gl.uniformMatrix4fv(u_modelMatrix, false, target.modelMatrix.elements);
 			
 			//cross your fingers and hope it works
+			//debugger;
 			this.gl.drawElements(this.gl.TRIANGLES, target.indices.length, this.gl.UNSIGNED_BYTE, 0);
 		}
 		

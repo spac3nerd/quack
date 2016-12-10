@@ -8,12 +8,17 @@ function initDemo() {
 		antialias: true
 	});
 	var scene = new quack.core.scene("scene1");
-	var sphereG = new quack.sphereGeometry();
+	
+	var spheres = [];
+	spheres.push(new quack.sphereGeometry(new quack.math.vector3(-1, 0, 0), 1, 0));
+	spheres.push(new quack.sphereGeometry(new quack.math.vector3(1, 0, 0), 1, 1));
+	
 	var camera = new quack.camera.perspectiveCamera(canvas.clientWidth / canvas.clientHeight, 75, 20, 1);
 	camera.setPosition(0, 0, 3);
 	camera.setLookAt(0, 0, 0);
 	camera.update();
-	scene.append(sphereG);
+	scene.append(spheres[0]);
+	scene.append(spheres[1]);
 	
 	//set a custom color based on each vertex's y coordinate
 	var setColors = function(data) {
@@ -32,7 +37,8 @@ function initDemo() {
 		
 		return response;
 	};
-	sphereG.setCustomColors(setColors);
+	spheres[0].setCustomColors(setColors);
+	spheres[1].setCustomColors(setColors);
 	
 	//Things needed by rotation input
 	var scaleX = document.getElementById("rotX");
@@ -69,9 +75,14 @@ function initDemo() {
 		delta = (date2 - date1) / 1000;
 		date1 = date2;
 		requestAnimationFrame(render);
-		sphereG.setRotateX(valX * delta);
-		sphereG.setRotateY(valY * delta);
-		sphereG.setRotateZ(valZ * delta);
+		spheres[0].setRotateX(valX * delta);
+		spheres[0].setRotateY(valY * delta);
+		spheres[0].setRotateZ(valZ * delta);
+		
+		spheres[1].setRotateX(valX * delta);
+		spheres[1].setRotateY(valY * delta);
+		spheres[1].setRotateZ(valZ * delta);
+		
 		renderer.render(scene, camera);
 		updateTextArea();
 	};
