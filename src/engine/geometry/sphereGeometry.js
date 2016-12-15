@@ -137,29 +137,29 @@ quack.sphereGeometry = function(position, radius, refinement, material) {
 			color.x, color.y, color.z
 		]);
 		
-		this.addFace(0, 11, 5);
-		this.addFace(0, 5, 1);
-		this.addFace(0, 1, 7);
-		this.addFace(0, 7, 10);
-		this.addFace(0, 10, 11);
+		this.addFace(0, 5, 11);
+		this.addFace(0, 1, 5);
+		this.addFace(0, 7, 1);
+		this.addFace(0, 10, 7);
+		this.addFace(0, 11, 10);
 		
-		this.addFace(1, 5, 9);
-		this.addFace(5, 11, 4);
-		this.addFace(11, 10, 2);
-		this.addFace(10, 7, 6);
-		this.addFace(7, 1, 8);
+		this.addFace(1, 9, 5);
+		this.addFace(5, 4, 11);
+		this.addFace(11, 2, 10);
+		this.addFace(10, 6, 7);
+		this.addFace(7, 8, 1);
 		
-		this.addFace(3, 9, 4);
-		this.addFace(3, 4, 2);
-		this.addFace(3, 2, 6);
-		this.addFace(3, 6, 8);
-		this.addFace(3, 8, 9);
+		this.addFace(3, 4, 9);
+		this.addFace(3, 2, 4);
+		this.addFace(3, 6, 2);
+		this.addFace(3, 8, 6);
+		this.addFace(3, 9, 8);
 		
-		this.addFace(4, 9, 5);
-		this.addFace(2, 4, 11);
-		this.addFace(6, 2, 10);
-		this.addFace(8, 6, 7);
-		this.addFace(9, 8, 1);
+		this.addFace(4, 5, 9);
+		this.addFace(2, 11, 4);
+		this.addFace(6, 10, 2);
+		this.addFace(8, 7, 6);
+		this.addFace(9, 1, 8);
 		
 		this._createIndices();
 		
@@ -197,6 +197,7 @@ quack.sphereGeometry = function(position, radius, refinement, material) {
 			
 			//normalize to keep everything on the unit sphere
 			mid.setNormal();
+			//console.log(mid.x + " " + mid.y + " " + mid.z);
 			that.vertices.push(mid.x, mid.y, mid.z);
 			that.midPointCache[key] = that.index;
 			
@@ -235,6 +236,7 @@ quack.sphereGeometry = function(position, radius, refinement, material) {
 		this._createIndices();
 		this._updateColors();
 		this._updateNormals();
+		
 		this.vertices = new Float32Array(this.vertices);
 		console.log("-----");
 		console.log(this.getNumVertices());
