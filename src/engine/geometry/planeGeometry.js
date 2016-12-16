@@ -23,7 +23,7 @@ quack.planeGeometry = function(position, material) {
 	
 	//Populate the indices array from faces
 	this._createIndices = function() {
-		this.indices = new Uint8Array(this.faces.length * 3);
+		this.indices = new Uint16Array(this.faces.length * 3);
 		
 		for (var k = 0, n = this.faces.length * 3, l = 0; k < n; k+= 3, l++) {
 			this.indices[k] = this.faces[l].v1;

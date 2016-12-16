@@ -67,7 +67,7 @@ quack.cubeGeometry = function(position, width, height, depth, material) {
 			1.0, 1.0, 1.0,  1.0, 1.0, 1.0,  1.0, 1.0, 1.0,  1.0, 1.0, 1.0, //white
 			0.4, 1.0, 1.0,  0.4, 1.0, 1.0,  0.4, 1.0, 1.0,  0.4, 1.0, 1.0 //teal
 		]);
-		this.indices = new Uint8Array([
+		this.indices = new Uint16Array([
 			0, 1, 2,   0, 2, 3,
 			4, 5, 6,   4, 6, 7,
 			8, 9,10,   8,10,11,

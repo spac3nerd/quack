@@ -27,7 +27,7 @@ quack.triangleGeometry = function(position, width, height, material) {
 			-1.0, -1.0, 0.0,
 			1.0,-1.0, 0.0
 		]);
-		this.indices = new Uint8Array([
+		this.indices = new Uint16Array([
 			0, 1, 2
 		]);
 	};

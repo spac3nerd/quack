@@ -172,7 +172,7 @@ quack.renderers.GLRenderer = function(canvas, options) {
 			}
 			
 			//cross your fingers and hope it works
-			this.gl.drawElements(this.gl.TRIANGLES, target.indices.length, this.gl.UNSIGNED_BYTE, 0);
+			this.gl.drawElements(this.gl.TRIANGLES, target.indices.length, this.gl.UNSIGNED_SHORT, 0);
 		}
 		
 	};
