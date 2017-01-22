@@ -1,5 +1,5 @@
 quack.camera.orthographicCamera = function(left, right, top, bottom, far, near) {
-	quack.core.genericObj.call(this);
+	quack.core.genericObj.call(this, {});
 	
 	this.left = left;
 	this.right = right;

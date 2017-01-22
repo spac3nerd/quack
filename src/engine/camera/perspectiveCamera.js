@@ -1,12 +1,14 @@
 quack.camera.perspectiveCamera = function(aspect, fov, far, near) {
-	quack.core.genericObj.call(this);
+	quack.core.genericObj.call(this, {
+		lookAt: new quack.math.vector3(0, 0, 0)
+	});
 	
 	this.aspect = aspect || 1;
 	this.fov = fov || 45;
 	this.far = far || 1;
 	this.near = near || 0;
 	
-	this.lookAt = new quack.math.vector3(0, 0, 0);
+	//this.lookAt = new quack.math.vector3(0, 0, 0);
 	
 	this.projectionMatrix = new quack.math.matrix4();
 	this.viewMatrix = new quack.math.matrix4();

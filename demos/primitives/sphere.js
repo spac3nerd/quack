@@ -13,7 +13,7 @@ function initDemo() {
 	spheres.push(new quack.sphereGeometry(new quack.math.vector3(-1.2, 1, 0), 1, 0));
 	spheres.push(new quack.sphereGeometry(new quack.math.vector3(1.2, 1, 0), 1, 1));
 	spheres.push(new quack.sphereGeometry(new quack.math.vector3(-1.2, -1, 0), 1, 2));
-	spheres.push(new quack.sphereGeometry(new quack.math.vector3(1.2, -1, 0), 1, 3));
+	spheres.push(new quack.sphereGeometry(new quack.math.vector3(1.2, -1, 0), 1, 5));
 	
 	//var camera = new quack.camera.perspectiveCamera(canvas.clientWidth / canvas.clientHeight, 75, 20, 1);
 	var camera = new quack.camera.orthographicCamera(-2.5, 2.5, 2.5, -2.5, 20, 1);

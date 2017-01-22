@@ -7,6 +7,7 @@ quack.prototype = {
 		quack.camera = {};
 		quack.renderers = {};
 		quack.material = {};
+		quack.lighting = {};
 		quack.editor = {};
 		quack.ui = {};
 		quack.shaders = {};

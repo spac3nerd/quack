@@ -73,6 +73,8 @@ module.exports = function(grunt) {
 					//camera
 					"src/engine/camera/orthographicCamera.js",
 					"src/engine/camera/perspectiveCamera.js",
+					//lighting
+					"src/engine/lighting/ambientLight.js",
 					//renderer
 					"src/engine/renderers/GLRenderer.js",
 					//models
